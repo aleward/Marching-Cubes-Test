@@ -10,7 +10,8 @@ External sources: Citations are commented in the shader code.
 Live Demo: [here](https://aleward.github.io/implicit-surfaces-aleward/)
 
 Screenshot:
-1[]()
+![](screenshot1.png)
+![](screenshot2.png)
 
 ## Objective
 - Gain more experience with GLSL Shader writing and raymarching
