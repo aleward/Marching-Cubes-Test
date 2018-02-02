@@ -1,6 +1,17 @@
 # CIS-566-Project-2
 https://github.com/CIS-566-2018/homework-2-ray-marching-implicit-surfaces
 
+Name: Alexis Ward
+
+PennKey: aleward
+
+External sources: Citations are commented in the shader code.
+
+Live Demo: [here](https://aleward.github.io/implicit-surfaces-aleward/)
+
+Screenshot:
+1[]()
+
 ## Objective
 - Gain more experience with GLSL Shader writing and raymarching
 - Experiment with procedural modeling and animation of scenes
