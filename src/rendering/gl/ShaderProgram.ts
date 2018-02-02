@@ -1,4 +1,4 @@
-import {vec4, mat4} from 'gl-matrix';
+import {vec4, vec3, vec2, mat4} from 'gl-matrix';
 import Drawable from './Drawable';
 import {gl} from '../../globals';
 
@@ -24,6 +24,10 @@ class ShaderProgram {
   attrPos: number;
 
   unifView: WebGLUniformLocation;
+  unifProject: WebGLUniformLocation;
+  unifEye: WebGLUniformLocation;
+  unifDimensions: WebGLUniformLocation;
+  unifTime: WebGLUniformLocation;
 
   constructor(shaders: Array<Shader>) {
     this.prog = gl.createProgram();
@@ -40,7 +44,12 @@ class ShaderProgram {
     this.attrPos = gl.getAttribLocation(this.prog, "vs_Pos");
 
     // TODO: add other attributes here
-    this.unifView   = gl.getUniformLocation(this.prog, "u_View");
+    this.unifView       = gl.getUniformLocation(this.prog, "u_View");
+    this.unifProject       = gl.getUniformLocation(this.prog, "u_Project");
+    this.unifEye        = gl.getUniformLocation(this.prog, "u_Eye");
+    this.unifDimensions = gl.getUniformLocation(this.prog, "u_Dimensions");
+    this.unifTime       = gl.getUniformLocation(this.prog, "u_Time");
+
   }
 
   use() {
@@ -51,6 +60,40 @@ class ShaderProgram {
   }
 
   // TODO: add functions to modify uniforms
+  setEye(eye: vec3) {
+    this.use();
+    if (this.unifEye !== -1) {
+      gl.uniform3fv(this.unifEye, eye);
+    }
+  }
+
+  setDimensions(dimensions: vec2) {
+    this.use();
+    if (this.unifDimensions !== -1) {
+      gl.uniform2fv(this.unifDimensions, dimensions);
+    }
+  }
+
+  setViewMatrix(vp: mat4) {
+    this.use();
+    if (this.unifView !== -1) {
+      gl.uniformMatrix4fv(this.unifView, false, vp);
+    }
+  }
+
+  setProjectionMatrix(pp: mat4) {
+    this.use();
+    if (this.unifProject !== -1) {
+      gl.uniformMatrix4fv(this.unifProject, false, pp);
+    }
+  }
+
+  setTime(time: number) {
+    this.use();
+    if (this.unifTime !== -1) {
+      gl.uniform1f(this.unifTime, time);
+    }
+  }
 
   draw(d: Drawable) {
     this.use();

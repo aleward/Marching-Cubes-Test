@@ -1,4 +1,4 @@
-import {vec3} from 'gl-matrix';
+import {vec3, vec2} from 'gl-matrix';
 import * as Stats from 'stats-js';
 import * as DAT from 'dat-gui';
 import Square from './geometry/Square';
@@ -56,6 +56,8 @@ function main() {
     new Shader(gl.FRAGMENT_SHADER, require('./shaders/raymarch-frag.glsl')),
   ]);
 
+  let time = 0.;
+
   // This function will be called every frame
   function tick() {
     camera.update();
@@ -66,11 +68,18 @@ function main() {
 
     // TODO: get / calculate relevant uniforms to send to shader here
     // TODO: send uniforms to shader
+    raymarchShader.setEye(camera.controls.eye);
+    raymarchShader.setViewMatrix(camera.viewMatrix);
+    raymarchShader.setProjectionMatrix(camera.projectionMatrix);
+    raymarchShader.setDimensions(vec2.fromValues(window.innerWidth, window.innerHeight));
+    raymarchShader.setTime(time);
 
     // March!
     raymarchShader.draw(screenQuad);
 
     // TODO: more shaders to layer / process the first one? (either via framebuffers or blending)
+
+    time = time + 1.0;
 
     stats.end();
 
