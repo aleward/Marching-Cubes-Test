@@ -13,6 +13,10 @@ class Square extends Drawable {
     this.center = vec4.fromValues(center[0], center[1], center[2], 1);
   }
 
+  drawMode(): GLenum {
+    return gl.TRIANGLES;
+  }
+
   create() {
 
   this.indices = new Uint32Array([0, 1, 2,

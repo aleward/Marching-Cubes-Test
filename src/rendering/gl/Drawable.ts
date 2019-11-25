@@ -59,9 +59,7 @@ abstract class Drawable {
     return this.count;
   }
 
-  drawMode(): GLenum {
-    return gl.TRIANGLES;
-  }
+  abstract drawMode(): GLenum;
 };
 
 export default Drawable;

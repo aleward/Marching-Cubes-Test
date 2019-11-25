@@ -1,17 +1,33 @@
 #version 300 es
 
 precision highp float;
+precision highp int;
 
-uniform mat4 u_View;
-uniform mat4 u_Project;
+uniform int u_DrawMode;
 uniform vec3 u_Eye;
-uniform vec2 u_Dimensions;
-uniform float u_Time;
 
-in vec4 fs_Pos;
-//in vec4 gl_FragCoord;
+uniform mat4 u_Model;       // The matrix that defines the transformation of the
+                            // object we're rendering. In this assignment,
+                            // this will be the result of traversing your scene graph.
 
-out vec4 out_Col;
+uniform mat4 u_ModelInvTr;  // The inverse transpose of the model matrix.
+                            // This allows us to transform the object's normals properly
+                            // if the object has been non-uniformly scaled.
+
+uniform mat4 u_View; 
+uniform mat4 u_Project;
+
+in vec4 vs_Pos;             // The array of vertex positions passed to the shader
+
+in vec4 vs_Nor;             // The array of vertex normals passed to the shader
+
+out vec4 fs_Nor;            // The array of normals that has been transformed by u_ModelInvTr. This is implicitly passed to the fragment shader.
+out vec4 fs_LightVec;       // The direction in which our virtual light lies, relative to each vertex. This is implicitly passed to the fragment shader.
+out vec4 fs_Pos;
+out vec4 fs_Col;
+
+const vec4 lightPos = vec4(5, 5, 3, 1); //The position of our virtual light, which is used to compute the shading of
+                                        //the geometry in the fragment shader.
 
 
 float EPSILON = 0.0001;
@@ -109,62 +125,31 @@ float mySDF(vec3 pos) {
 	float eyes = smin(eye(pos - vec3(0.34f, 0.25f, 0.98f), 23.f), eye(pos - vec3(-0.34f, 0.25f, 0.98f), -23.f), 100.f);
 
 	float cappy = min(min(hat, bod), eyes);
-	return cappy;//min(cappy, box(pos - vec3(0.f, -0.1f, -0.2f), vec3(1.7f, 1.7f, 1.8f)));
+	return cappy;
 }
 
-vec3 estimateNormal(vec3 p) { 
-	return normalize(vec3( 
-		mySDF(vec3(p.x + EPSILON, p.y, p.z)) - mySDF(vec3(p.x - EPSILON, p.y, p.z)), 
-		mySDF(vec3(p.x, p.y + EPSILON, p.z)) - mySDF(vec3(p.x, p.y - EPSILON, p.z)), 
-		mySDF(vec3(p.x, p.y, p.z + EPSILON)) - mySDF(vec3(p.x, p.y, p.z - EPSILON)) )); 
-}
 
 void main() {
-	// TODO: make a Raymarcher!
+	mat3 invTranspose = mat3(u_ModelInvTr);
 
-	vec3 pos = u_Eye;
+    fs_Pos = vs_Pos;
+    
+    vec4 modelposition;
+    if (u_DrawMode == 0) {
+        modelposition = u_Model * vs_Pos;   // Temporarily store the transformed vertex positions for use below
+        fs_Nor = vec4(invTranspose * vs_Nor.xyz, 0);        
+    } else {
+        modelposition = vs_Pos;
+        fs_Nor = vs_Nor;
+    }
 
-	// Finds the furthest point in the background, used to compute rays
-	float x = (gl_FragCoord.x / u_Dimensions.x) * 2.f - 1.f;
-	float y = 1.f - (gl_FragCoord.y / u_Dimensions.y) * 2.f;
-	vec4 bg = inverse(u_View) * inverse(u_Project) * vec4(x * 1000.f, y * -1000.f, 1000.f, 1000.f);
+    fs_Col = vec4(1.f, 1.f, 1.f, 1.f);
+    if (u_DrawMode == 2 && mySDF(vec3(vs_Pos)) <= 0.f) {
+        fs_Col = vec4(1.f, 0.f, 0.f, 1.f);
+    }
 
-	vec3 dir = normalize(vec3(bg.x, bg.y, bg.z) - u_Eye);
+    fs_LightVec = lightPos - modelposition;  // Compute the direction in which the light source lies
 
-	bool geo = false;
-
-	float maxLoops = 0.f; // Ensures program doesn't crash
-
-	float t = mySDF(pos);
-	float dist = t;
-
-	while (t < CLIP && maxLoops < 100.f) {
-		pos += t * dir;
-		float i = mySDF(pos);
-		dist += i;
-		if (i < EPSILON && i > -0.-EPSILON) { //
-			geo = true;
-			break;
-		}
-		t = i;
-		maxLoops++;
-	}
-
-
-	if (geo) {
-		vec4 lightVec = vec4(5.f, 5.f, 3.f, 1.f) - vec4(pos, 1.f);
-		float diffuse = dot(estimateNormal(pos), normalize(lightVec.xyz));
-    	diffuse = min(diffuse, 1.0);
-   		diffuse = max(diffuse, 0.0);
-		diffuse /= (dist * 0.1);
-		float lightIntensity = diffuse * 0.6 + 0.2;
-
-		out_Col = vec4(mix(vec3(0.5843, 0.898, 1.0) + vec3(1.0, 0.8627, 0.3686) *
-            cos(2.f * 3.14159265359 * (vec3(0.8353, 0.549, 0.1765) / lightIntensity +
-                vec3(0.511, 0.1176, 0.0902))) * lightIntensity, vec3(0.f, 0.f, 0.f), dist / CLIP), 1.0);
-	} else {
-		// Background gradient
-		float glow = (dot(normalize(bg.xyz), vec3(0.f, 1.f, 0.f)) + 1.0) / 2.f;
-		out_Col = vec4(mix(vec3(0.0, 1.0, 1.0), vec3(0.0, 0.0, 0.0), sqrt(glow)), 1.0);
-	}
+    gl_PointSize = 3.0;
+    gl_Position = u_Project * u_View * modelposition;
 }
