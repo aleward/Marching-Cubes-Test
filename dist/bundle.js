@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "dist/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 18);
+/******/ 	return __webpack_require__(__webpack_require__.s = 19);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -145,6 +145,69 @@ function equals(a, b) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__gl_matrix_common__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__gl_matrix_mat2__ = __webpack_require__(20);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__gl_matrix_mat2d__ = __webpack_require__(21);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__gl_matrix_mat3__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__gl_matrix_mat4__ = __webpack_require__(22);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__gl_matrix_quat__ = __webpack_require__(23);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__gl_matrix_vec2__ = __webpack_require__(24);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__gl_matrix_vec3__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__gl_matrix_vec4__ = __webpack_require__(7);
+/* unused harmony reexport glMatrix */
+/* unused harmony reexport mat2 */
+/* unused harmony reexport mat2d */
+/* unused harmony reexport mat3 */
+/* harmony reexport (module object) */ __webpack_require__.d(__webpack_exports__, "a", function() { return __WEBPACK_IMPORTED_MODULE_4__gl_matrix_mat4__; });
+/* unused harmony reexport quat */
+/* harmony reexport (module object) */ __webpack_require__.d(__webpack_exports__, "b", function() { return __WEBPACK_IMPORTED_MODULE_6__gl_matrix_vec2__; });
+/* harmony reexport (module object) */ __webpack_require__.d(__webpack_exports__, "c", function() { return __WEBPACK_IMPORTED_MODULE_7__gl_matrix_vec3__; });
+/* harmony reexport (module object) */ __webpack_require__.d(__webpack_exports__, "d", function() { return __WEBPACK_IMPORTED_MODULE_8__gl_matrix_vec4__; });
+/**
+ * @fileoverview gl-matrix - High performance matrix and vector operations
+ * @author Brandon Jones
+ * @author Colin MacKenzie IV
+ * @version 2.4.0
+ */
+
+/* Copyright (c) 2015, Brandon Jones, Colin MacKenzie IV.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE. */
+// END HEADER
+
+
+
+
+
+
+
+
+
+
+
+
+
+/***/ }),
+/* 2 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return gl; });
 /* harmony export (immutable) */ __webpack_exports__["b"] = setGL;
 var gl;
@@ -154,7 +217,7 @@ function setGL(_gl) {
 
 
 /***/ }),
-/* 2 */
+/* 3 */
 /***/ (function(module, exports) {
 
 module.exports = invert;
@@ -212,69 +275,6 @@ function invert(out, a) {
 
     return out;
 };
-
-/***/ }),
-/* 3 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__gl_matrix_common__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__gl_matrix_mat2__ = __webpack_require__(19);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__gl_matrix_mat2d__ = __webpack_require__(20);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__gl_matrix_mat3__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__gl_matrix_mat4__ = __webpack_require__(21);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__gl_matrix_quat__ = __webpack_require__(22);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__gl_matrix_vec2__ = __webpack_require__(23);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__gl_matrix_vec3__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__gl_matrix_vec4__ = __webpack_require__(7);
-/* unused harmony reexport glMatrix */
-/* unused harmony reexport mat2 */
-/* unused harmony reexport mat2d */
-/* unused harmony reexport mat3 */
-/* harmony reexport (module object) */ __webpack_require__.d(__webpack_exports__, "a", function() { return __WEBPACK_IMPORTED_MODULE_4__gl_matrix_mat4__; });
-/* unused harmony reexport quat */
-/* harmony reexport (module object) */ __webpack_require__.d(__webpack_exports__, "b", function() { return __WEBPACK_IMPORTED_MODULE_6__gl_matrix_vec2__; });
-/* harmony reexport (module object) */ __webpack_require__.d(__webpack_exports__, "c", function() { return __WEBPACK_IMPORTED_MODULE_7__gl_matrix_vec3__; });
-/* harmony reexport (module object) */ __webpack_require__.d(__webpack_exports__, "d", function() { return __WEBPACK_IMPORTED_MODULE_8__gl_matrix_vec4__; });
-/**
- * @fileoverview gl-matrix - High performance matrix and vector operations
- * @author Brandon Jones
- * @author Colin MacKenzie IV
- * @version 2.4.0
- */
-
-/* Copyright (c) 2015, Brandon Jones, Colin MacKenzie IV.
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-THE SOFTWARE. */
-// END HEADER
-
-
-
-
-
-
-
-
-
-
-
-
 
 /***/ }),
 /* 4 */
@@ -2615,6 +2615,63 @@ const forEach = (function() {
 
 /***/ }),
 /* 8 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__globals__ = __webpack_require__(2);
+
+class Drawable {
+    constructor() {
+        this.count = 0;
+        this.idxBound = false;
+        this.posBound = false;
+        this.norBound = false;
+    }
+    destroy() {
+        __WEBPACK_IMPORTED_MODULE_0__globals__["a" /* gl */].deleteBuffer(this.bufIdx);
+        __WEBPACK_IMPORTED_MODULE_0__globals__["a" /* gl */].deleteBuffer(this.bufPos);
+        __WEBPACK_IMPORTED_MODULE_0__globals__["a" /* gl */].deleteBuffer(this.bufNor);
+    }
+    generateIdx() {
+        this.idxBound = true;
+        this.bufIdx = __WEBPACK_IMPORTED_MODULE_0__globals__["a" /* gl */].createBuffer();
+    }
+    generatePos() {
+        this.posBound = true;
+        this.bufPos = __WEBPACK_IMPORTED_MODULE_0__globals__["a" /* gl */].createBuffer();
+    }
+    generateNor() {
+        this.norBound = true;
+        this.bufNor = __WEBPACK_IMPORTED_MODULE_0__globals__["a" /* gl */].createBuffer();
+    }
+    bindIdx() {
+        if (this.idxBound) {
+            __WEBPACK_IMPORTED_MODULE_0__globals__["a" /* gl */].bindBuffer(__WEBPACK_IMPORTED_MODULE_0__globals__["a" /* gl */].ELEMENT_ARRAY_BUFFER, this.bufIdx);
+        }
+        return this.idxBound;
+    }
+    bindPos() {
+        if (this.posBound) {
+            __WEBPACK_IMPORTED_MODULE_0__globals__["a" /* gl */].bindBuffer(__WEBPACK_IMPORTED_MODULE_0__globals__["a" /* gl */].ARRAY_BUFFER, this.bufPos);
+        }
+        return this.posBound;
+    }
+    bindNor() {
+        if (this.norBound) {
+            __WEBPACK_IMPORTED_MODULE_0__globals__["a" /* gl */].bindBuffer(__WEBPACK_IMPORTED_MODULE_0__globals__["a" /* gl */].ARRAY_BUFFER, this.bufNor);
+        }
+        return this.norBound;
+    }
+    elemCount() {
+        return this.count;
+    }
+}
+;
+/* harmony default export */ __webpack_exports__["a"] = (Drawable);
+
+
+/***/ }),
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2623,7 +2680,7 @@ const forEach = (function() {
 module.exports = createFilteredVector
 
 var cubicHermite = __webpack_require__(36)
-var bsearch = __webpack_require__(9)
+var bsearch = __webpack_require__(10)
 
 function clamp(lo, hi, x) {
   return Math.min(hi, Math.max(lo, x))
@@ -2912,7 +2969,7 @@ function createFilteredVector(initState, initVelocity, initTime) {
 
 
 /***/ }),
-/* 9 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2979,7 +3036,7 @@ module.exports = {
 
 
 /***/ }),
-/* 10 */
+/* 11 */
 /***/ (function(module, exports) {
 
 module.exports = cross;
@@ -3003,7 +3060,7 @@ function cross(out, a, b) {
 }
 
 /***/ }),
-/* 11 */
+/* 12 */
 /***/ (function(module, exports) {
 
 module.exports = dot;
@@ -3020,10 +3077,10 @@ function dot(a, b) {
 }
 
 /***/ }),
-/* 12 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var identity = __webpack_require__(13);
+var identity = __webpack_require__(14);
 
 module.exports = lookAt;
 
@@ -3115,7 +3172,7 @@ function lookAt(out, eye, center, up) {
 };
 
 /***/ }),
-/* 13 */
+/* 14 */
 /***/ (function(module, exports) {
 
 module.exports = identity;
@@ -3147,7 +3204,7 @@ function identity(out) {
 };
 
 /***/ }),
-/* 14 */
+/* 15 */
 /***/ (function(module, exports) {
 
 module.exports = translate;
@@ -3190,7 +3247,7 @@ function translate(out, a, v) {
 };
 
 /***/ }),
-/* 15 */
+/* 16 */
 /***/ (function(module, exports) {
 
 module.exports = create;
@@ -3222,7 +3279,7 @@ function create() {
 };
 
 /***/ }),
-/* 16 */
+/* 17 */
 /***/ (function(module, exports) {
 
 module.exports = scale;
@@ -3258,7 +3315,7 @@ function scale(out, a, v) {
 };
 
 /***/ }),
-/* 17 */
+/* 18 */
 /***/ (function(module, exports) {
 
 module.exports = determinant;
@@ -3293,20 +3350,26 @@ function determinant(a) {
 };
 
 /***/ }),
-/* 18 */
+/* 19 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_gl_matrix__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_stats_js__ = __webpack_require__(24);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_gl_matrix__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_stats_js__ = __webpack_require__(25);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_stats_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_stats_js__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_dat_gui__ = __webpack_require__(25);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_dat_gui__ = __webpack_require__(26);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_dat_gui___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_dat_gui__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__geometry_Square__ = __webpack_require__(28);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__geometry_Square__ = __webpack_require__(29);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Camera__ = __webpack_require__(30);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__globals__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__globals__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__rendering_gl_ShaderProgram__ = __webpack_require__(63);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__geometry_MarchCube__ = __webpack_require__(64);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__shaders_march_frag_glsl_js__ = __webpack_require__(65);
+throw new Error("Cannot find module \"./types/WebGL2Compute\"");
+
+
+
 
 
 
@@ -3316,8 +3379,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 // Define an object with application parameters and button callbacks
 // This will be referred to by dat.GUI's functions that add GUI elements.
-const controls = {};
+const controls = {
+    // TODO: add any controls you want
+    'Cubes Across': 10,
+    'Generate Mesh': function () { },
+};
 let screenQuad;
+let outerCube;
 function main() {
     // Initial display for framerate
     const stats = __WEBPACK_IMPORTED_MODULE_1_stats_js__();
@@ -3329,13 +3397,25 @@ function main() {
     // TODO: add any controls you need to the gui
     const gui = new __WEBPACK_IMPORTED_MODULE_2_dat_gui__["GUI"]();
     // E.G. gui.add(controls, 'tesselations', 0, 8).step(1);
+    var cubesAcross = gui.add(controls, 'Cubes Across', 5, 50).step(1);
+    var generate = gui.add(controls, 'Generate Mesh');
     // get canvas and webgl context
     const canvas = document.getElementById('canvas');
     function setSize(width, height) {
         canvas.width = width;
         canvas.height = height;
     }
-    const gl = canvas.getContext('webgl2');
+    // From 9ballsyndrome github
+    let computeProgram;
+    let computeUniform;
+    let computeUniformDirty;
+    let ssboIn;
+    let ssboOut;
+    let model;
+    let numGroups;
+    let numInstances;
+    // Want below to be context:WebGL2ComputeRenderingContext and webgl2-compute
+    const gl = canvas.getContext('webgl2-compute');
     if (!gl) {
         alert('WebGL 2 not supported!');
     }
@@ -3344,13 +3424,52 @@ function main() {
     Object(__WEBPACK_IMPORTED_MODULE_5__globals__["b" /* setGL */])(gl);
     screenQuad = new __WEBPACK_IMPORTED_MODULE_3__geometry_Square__["a" /* default */](__WEBPACK_IMPORTED_MODULE_0_gl_matrix__["c" /* vec3 */].fromValues(0, 0, 0));
     screenQuad.create();
+    // MARCHING CUBES TESTS
+    outerCube = new __WEBPACK_IMPORTED_MODULE_7__geometry_MarchCube__["a" /* default */](__WEBPACK_IMPORTED_MODULE_0_gl_matrix__["c" /* vec3 */].fromValues(0, 0, 0));
     const camera = new __WEBPACK_IMPORTED_MODULE_4__Camera__["a" /* default */](__WEBPACK_IMPORTED_MODULE_0_gl_matrix__["c" /* vec3 */].fromValues(0, 0, 5), __WEBPACK_IMPORTED_MODULE_0_gl_matrix__["c" /* vec3 */].fromValues(0, 0, 0));
     gl.clearColor(0.0, 0.0, 0.0, 1);
     gl.disable(gl.DEPTH_TEST);
+    //gl.lineWidth(2);
+    // More from 9ball - change to my cube vals
+    numInstances = 1024;
+    numGroups = numInstances / 256;
+    computeUniformDirty = true;
+    let shaderSource = Object(__WEBPACK_IMPORTED_MODULE_8__shaders_march_frag_glsl_js__["a" /* default */])({
+        numLights: 2, maxNumLights: 2,
+        numGBuffers: 2,
+        xSlice: 2, ySlice: 2, zSlice: 2,
+    });
+    // create WebGLShader for ComputeShader
+    /*const computeShader:WebGLShader = gl.createShader(gl.COMPUTE_SHADER);
+    gl.shaderSource(computeShader, shaderSource);
+    gl.compileShader(computeShader);
+    if(!gl.getShaderParameter(computeShader, gl.COMPILE_STATUS))
+    {
+      console.log(gl.getShaderInfoLog(computeShader));
+    }*/
     const raymarchShader = new __WEBPACK_IMPORTED_MODULE_6__rendering_gl_ShaderProgram__["b" /* default */]([
-        new __WEBPACK_IMPORTED_MODULE_6__rendering_gl_ShaderProgram__["a" /* Shader */](gl.VERTEX_SHADER, __webpack_require__(64)),
-        new __WEBPACK_IMPORTED_MODULE_6__rendering_gl_ShaderProgram__["a" /* Shader */](gl.FRAGMENT_SHADER, __webpack_require__(65)),
+        new __WEBPACK_IMPORTED_MODULE_6__rendering_gl_ShaderProgram__["a" /* Shader */](gl.VERTEX_SHADER, __webpack_require__(66)),
+        new __WEBPACK_IMPORTED_MODULE_6__rendering_gl_ShaderProgram__["a" /* Shader */](gl.FRAGMENT_SHADER, __webpack_require__(67)),
     ]);
+    // NEW MARCHCUBE VALUES
+    const cubeMarch = new __WEBPACK_IMPORTED_MODULE_6__rendering_gl_ShaderProgram__["b" /* default */]([
+        new __WEBPACK_IMPORTED_MODULE_6__rendering_gl_ShaderProgram__["a" /* Shader */](gl.VERTEX_SHADER, __webpack_require__(68)),
+        new __WEBPACK_IMPORTED_MODULE_6__rendering_gl_ShaderProgram__["a" /* Shader */](gl.FRAGMENT_SHADER, __webpack_require__(69)),
+    ]);
+    let cubeTrans = __WEBPACK_IMPORTED_MODULE_0_gl_matrix__["a" /* mat4 */].fromValues(1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, -0.1, -0.2, 1.0);
+    let cubeScale = __WEBPACK_IMPORTED_MODULE_0_gl_matrix__["a" /* mat4 */].fromValues(1.7, 0.0, 0.0, 0.0, 0.0, 1.7, 0.0, 0.0, 0.0, 0.0, 1.8, 0.0, 0.0, 0.0, 0.0, 1.0);
+    outerCube.setScaleTrans(__WEBPACK_IMPORTED_MODULE_0_gl_matrix__["c" /* vec3 */].fromValues(1.7, 1.7, 1.8), __WEBPACK_IMPORTED_MODULE_0_gl_matrix__["c" /* vec3 */].fromValues(0.0, -0.1, -0.2));
+    outerCube.create();
+    let cModelMat = __WEBPACK_IMPORTED_MODULE_0_gl_matrix__["a" /* mat4 */].create();
+    __WEBPACK_IMPORTED_MODULE_0_gl_matrix__["a" /* mat4 */].multiply(cModelMat, cubeTrans, cubeScale);
+    function setVals(modelMat) {
+        cubeMarch.setEye(camera.controls.eye);
+        cubeMarch.setViewMatrix(camera.viewMatrix);
+        cubeMarch.setProjectionMatrix(camera.projectionMatrix);
+        cubeMarch.setDimensions(__WEBPACK_IMPORTED_MODULE_0_gl_matrix__["b" /* vec2 */].fromValues(window.innerWidth, window.innerHeight));
+        cubeMarch.setModelMatrix(modelMat);
+        cubeMarch.setUnifDrawMode(2);
+    }
     let time = 0.;
     // This function will be called every frame
     function tick() {
@@ -3368,6 +3487,10 @@ function main() {
         // March!
         raymarchShader.draw(screenQuad);
         // TODO: more shaders to layer / process the first one? (either via framebuffers or blending)
+        setVals(cModelMat);
+        gl.enable(gl.DEPTH_TEST);
+        cubeMarch.draw(outerCube);
+        gl.disable(gl.DEPTH_TEST);
         time = time + 1.0;
         stats.end();
         // Tell the browser to call `tick` again whenever it renders a new frame
@@ -3388,7 +3511,7 @@ main();
 
 
 /***/ }),
-/* 19 */
+/* 20 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3857,7 +3980,7 @@ const sub = subtract;
 
 
 /***/ }),
-/* 20 */
+/* 21 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -4358,7 +4481,7 @@ const sub = subtract;
 
 
 /***/ }),
-/* 21 */
+/* 22 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -6096,7 +6219,7 @@ const sub = subtract;
 
 
 /***/ }),
-/* 22 */
+/* 23 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -6786,7 +6909,7 @@ const setAxes = (function() {
 
 
 /***/ }),
-/* 23 */
+/* 24 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -7429,7 +7552,7 @@ const forEach = (function() {
 
 
 /***/ }),
-/* 24 */
+/* 25 */
 /***/ (function(module, exports) {
 
 // stats.js - http://github.com/mrdoob/stats.js
@@ -7441,14 +7564,14 @@ a+"px",m=b,r=0);return b},update:function(){l=this.end()}}};"object"===typeof mo
 
 
 /***/ }),
-/* 25 */
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(26)
-module.exports.color = __webpack_require__(27)
+module.exports = __webpack_require__(27)
+module.exports.color = __webpack_require__(28)
 
 /***/ }),
-/* 26 */
+/* 27 */
 /***/ (function(module, exports) {
 
 /**
@@ -11113,7 +11236,7 @@ dat.dom.dom,
 dat.utils.common);
 
 /***/ }),
-/* 27 */
+/* 28 */
 /***/ (function(module, exports) {
 
 /**
@@ -11873,13 +11996,13 @@ dat.color.toString,
 dat.utils.common);
 
 /***/ }),
-/* 28 */
+/* 29 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_gl_matrix__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__rendering_gl_Drawable__ = __webpack_require__(29);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__globals__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_gl_matrix__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__rendering_gl_Drawable__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__globals__ = __webpack_require__(2);
 
 
 
@@ -11887,6 +12010,9 @@ class Square extends __WEBPACK_IMPORTED_MODULE_1__rendering_gl_Drawable__["a" /*
     constructor(center) {
         super(); // Call the constructor of the super class. This is required.
         this.center = __WEBPACK_IMPORTED_MODULE_0_gl_matrix__["d" /* vec4 */].fromValues(center[0], center[1], center[2], 1);
+    }
+    drawMode() {
+        return __WEBPACK_IMPORTED_MODULE_2__globals__["a" /* gl */].TRIANGLES;
     }
     create() {
         this.indices = new Uint32Array([0, 1, 2,
@@ -11917,73 +12043,13 @@ class Square extends __WEBPACK_IMPORTED_MODULE_1__rendering_gl_Drawable__["a" /*
 
 
 /***/ }),
-/* 29 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__globals__ = __webpack_require__(1);
-
-class Drawable {
-    constructor() {
-        this.count = 0;
-        this.idxBound = false;
-        this.posBound = false;
-        this.norBound = false;
-    }
-    destroy() {
-        __WEBPACK_IMPORTED_MODULE_0__globals__["a" /* gl */].deleteBuffer(this.bufIdx);
-        __WEBPACK_IMPORTED_MODULE_0__globals__["a" /* gl */].deleteBuffer(this.bufPos);
-        __WEBPACK_IMPORTED_MODULE_0__globals__["a" /* gl */].deleteBuffer(this.bufNor);
-    }
-    generateIdx() {
-        this.idxBound = true;
-        this.bufIdx = __WEBPACK_IMPORTED_MODULE_0__globals__["a" /* gl */].createBuffer();
-    }
-    generatePos() {
-        this.posBound = true;
-        this.bufPos = __WEBPACK_IMPORTED_MODULE_0__globals__["a" /* gl */].createBuffer();
-    }
-    generateNor() {
-        this.norBound = true;
-        this.bufNor = __WEBPACK_IMPORTED_MODULE_0__globals__["a" /* gl */].createBuffer();
-    }
-    bindIdx() {
-        if (this.idxBound) {
-            __WEBPACK_IMPORTED_MODULE_0__globals__["a" /* gl */].bindBuffer(__WEBPACK_IMPORTED_MODULE_0__globals__["a" /* gl */].ELEMENT_ARRAY_BUFFER, this.bufIdx);
-        }
-        return this.idxBound;
-    }
-    bindPos() {
-        if (this.posBound) {
-            __WEBPACK_IMPORTED_MODULE_0__globals__["a" /* gl */].bindBuffer(__WEBPACK_IMPORTED_MODULE_0__globals__["a" /* gl */].ARRAY_BUFFER, this.bufPos);
-        }
-        return this.posBound;
-    }
-    bindNor() {
-        if (this.norBound) {
-            __WEBPACK_IMPORTED_MODULE_0__globals__["a" /* gl */].bindBuffer(__WEBPACK_IMPORTED_MODULE_0__globals__["a" /* gl */].ARRAY_BUFFER, this.bufNor);
-        }
-        return this.norBound;
-    }
-    elemCount() {
-        return this.count;
-    }
-    drawMode() {
-        return __WEBPACK_IMPORTED_MODULE_0__globals__["a" /* gl */].TRIANGLES;
-    }
-}
-;
-/* harmony default export */ __webpack_exports__["a"] = (Drawable);
-
-
-/***/ }),
 /* 30 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_3d_view_controls__ = __webpack_require__(31);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_3d_view_controls___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_3d_view_controls__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_gl_matrix__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_gl_matrix__ = __webpack_require__(1);
 
 
 class Camera {
@@ -12433,12 +12499,12 @@ function createViewController(options) {
 
 module.exports = createTurntableController
 
-var filterVector = __webpack_require__(8)
-var invert44     = __webpack_require__(2)
+var filterVector = __webpack_require__(9)
+var invert44     = __webpack_require__(3)
 var rotateM      = __webpack_require__(37)
-var cross        = __webpack_require__(10)
+var cross        = __webpack_require__(11)
 var normalize3   = __webpack_require__(4)
-var dot3         = __webpack_require__(11)
+var dot3         = __webpack_require__(12)
 
 function len3(x, y, z) {
   return Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2) + Math.pow(z, 2))
@@ -13125,10 +13191,10 @@ function rotate(out, a, rad, axis) {
 
 module.exports = createOrbitController
 
-var filterVector  = __webpack_require__(8)
-var lookAt        = __webpack_require__(12)
+var filterVector  = __webpack_require__(9)
+var lookAt        = __webpack_require__(13)
 var mat4FromQuat  = __webpack_require__(39)
-var invert44      = __webpack_require__(2)
+var invert44      = __webpack_require__(3)
 var quatFromFrame = __webpack_require__(40)
 
 function len3(x,y,z) {
@@ -13621,15 +13687,15 @@ function quatFromFrame(
 "use strict";
 
 
-var bsearch   = __webpack_require__(9)
+var bsearch   = __webpack_require__(10)
 var m4interp  = __webpack_require__(42)
-var invert44  = __webpack_require__(2)
+var invert44  = __webpack_require__(3)
 var rotateX   = __webpack_require__(54)
 var rotateY   = __webpack_require__(55)
 var rotateZ   = __webpack_require__(56)
-var lookAt    = __webpack_require__(12)
-var translate = __webpack_require__(14)
-var scale     = __webpack_require__(16)
+var lookAt    = __webpack_require__(13)
+var translate = __webpack_require__(15)
+var scale     = __webpack_require__(17)
 var normalize = __webpack_require__(4)
 
 var DEFAULT_CENTER = [0,0,0]
@@ -13827,7 +13893,7 @@ var lerp = __webpack_require__(43)
 
 var recompose = __webpack_require__(44)
 var decompose = __webpack_require__(47)
-var determinant = __webpack_require__(17)
+var determinant = __webpack_require__(18)
 var slerp = __webpack_require__(52)
 
 var state0 = state()
@@ -13917,11 +13983,11 @@ From: http://www.w3.org/TR/css3-transforms/#recomposing-to-a-3d-matrix
 */
 
 var mat4 = {
-    identity: __webpack_require__(13),
-    translate: __webpack_require__(14),
+    identity: __webpack_require__(14),
+    translate: __webpack_require__(15),
     multiply: __webpack_require__(45),
-    create: __webpack_require__(15),
-    scale: __webpack_require__(16),
+    create: __webpack_require__(16),
+    scale: __webpack_require__(17),
     fromRotationTranslation: __webpack_require__(46)
 }
 
@@ -14094,16 +14160,16 @@ http://www.w3.org/TR/css3-transforms/#decomposing-a-3d-matrix
 
 var normalize = __webpack_require__(48)
 
-var create = __webpack_require__(15)
+var create = __webpack_require__(16)
 var clone = __webpack_require__(49)
-var determinant = __webpack_require__(17)
-var invert = __webpack_require__(2)
+var determinant = __webpack_require__(18)
+var invert = __webpack_require__(3)
 var transpose = __webpack_require__(50)
 var vec3 = {
     length: __webpack_require__(51),
     normalize: __webpack_require__(4),
-    dot: __webpack_require__(11),
-    cross: __webpack_require__(10)
+    dot: __webpack_require__(12),
+    cross: __webpack_require__(11)
 }
 
 var tmp = create()
@@ -15029,16 +15095,18 @@ function getBoundingClientOffset (element) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__globals__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_gl_matrix__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__globals__ = __webpack_require__(2);
+
 
 var activeProgram = null;
 class Shader {
     constructor(type, source) {
-        this.shader = __WEBPACK_IMPORTED_MODULE_0__globals__["a" /* gl */].createShader(type);
-        __WEBPACK_IMPORTED_MODULE_0__globals__["a" /* gl */].shaderSource(this.shader, source);
-        __WEBPACK_IMPORTED_MODULE_0__globals__["a" /* gl */].compileShader(this.shader);
-        if (!__WEBPACK_IMPORTED_MODULE_0__globals__["a" /* gl */].getShaderParameter(this.shader, __WEBPACK_IMPORTED_MODULE_0__globals__["a" /* gl */].COMPILE_STATUS)) {
-            throw __WEBPACK_IMPORTED_MODULE_0__globals__["a" /* gl */].getShaderInfoLog(this.shader);
+        this.shader = __WEBPACK_IMPORTED_MODULE_1__globals__["a" /* gl */].createShader(type);
+        __WEBPACK_IMPORTED_MODULE_1__globals__["a" /* gl */].shaderSource(this.shader, source);
+        __WEBPACK_IMPORTED_MODULE_1__globals__["a" /* gl */].compileShader(this.shader);
+        if (!__WEBPACK_IMPORTED_MODULE_1__globals__["a" /* gl */].getShaderParameter(this.shader, __WEBPACK_IMPORTED_MODULE_1__globals__["a" /* gl */].COMPILE_STATUS)) {
+            throw __WEBPACK_IMPORTED_MODULE_1__globals__["a" /* gl */].getShaderInfoLog(this.shader);
         }
     }
 }
@@ -15047,70 +15115,98 @@ class Shader {
 ;
 class ShaderProgram {
     constructor(shaders) {
-        this.prog = __WEBPACK_IMPORTED_MODULE_0__globals__["a" /* gl */].createProgram();
+        this.prog = __WEBPACK_IMPORTED_MODULE_1__globals__["a" /* gl */].createProgram();
         for (let shader of shaders) {
-            __WEBPACK_IMPORTED_MODULE_0__globals__["a" /* gl */].attachShader(this.prog, shader.shader);
+            __WEBPACK_IMPORTED_MODULE_1__globals__["a" /* gl */].attachShader(this.prog, shader.shader);
         }
-        __WEBPACK_IMPORTED_MODULE_0__globals__["a" /* gl */].linkProgram(this.prog);
-        if (!__WEBPACK_IMPORTED_MODULE_0__globals__["a" /* gl */].getProgramParameter(this.prog, __WEBPACK_IMPORTED_MODULE_0__globals__["a" /* gl */].LINK_STATUS)) {
-            throw __WEBPACK_IMPORTED_MODULE_0__globals__["a" /* gl */].getProgramInfoLog(this.prog);
+        __WEBPACK_IMPORTED_MODULE_1__globals__["a" /* gl */].linkProgram(this.prog);
+        if (!__WEBPACK_IMPORTED_MODULE_1__globals__["a" /* gl */].getProgramParameter(this.prog, __WEBPACK_IMPORTED_MODULE_1__globals__["a" /* gl */].LINK_STATUS)) {
+            throw __WEBPACK_IMPORTED_MODULE_1__globals__["a" /* gl */].getProgramInfoLog(this.prog);
         }
         // Raymarcher only draws a quad in screen space! No other attributes
-        this.attrPos = __WEBPACK_IMPORTED_MODULE_0__globals__["a" /* gl */].getAttribLocation(this.prog, "vs_Pos");
+        this.attrPos = __WEBPACK_IMPORTED_MODULE_1__globals__["a" /* gl */].getAttribLocation(this.prog, "vs_Pos");
+        this.attrNor = __WEBPACK_IMPORTED_MODULE_1__globals__["a" /* gl */].getAttribLocation(this.prog, "vs_Nor");
         // TODO: add other attributes here
-        this.unifView = __WEBPACK_IMPORTED_MODULE_0__globals__["a" /* gl */].getUniformLocation(this.prog, "u_View");
-        this.unifProject = __WEBPACK_IMPORTED_MODULE_0__globals__["a" /* gl */].getUniformLocation(this.prog, "u_Project");
-        this.unifEye = __WEBPACK_IMPORTED_MODULE_0__globals__["a" /* gl */].getUniformLocation(this.prog, "u_Eye");
-        this.unifDimensions = __WEBPACK_IMPORTED_MODULE_0__globals__["a" /* gl */].getUniformLocation(this.prog, "u_Dimensions");
-        this.unifTime = __WEBPACK_IMPORTED_MODULE_0__globals__["a" /* gl */].getUniformLocation(this.prog, "u_Time");
+        this.unifDrawMode = __WEBPACK_IMPORTED_MODULE_1__globals__["a" /* gl */].getUniformLocation(this.prog, "u_DrawMode");
+        this.unifModel = __WEBPACK_IMPORTED_MODULE_1__globals__["a" /* gl */].getUniformLocation(this.prog, "u_Model");
+        this.unifModelInvTr = __WEBPACK_IMPORTED_MODULE_1__globals__["a" /* gl */].getUniformLocation(this.prog, "u_ModelInvTr");
+        this.unifView = __WEBPACK_IMPORTED_MODULE_1__globals__["a" /* gl */].getUniformLocation(this.prog, "u_View");
+        this.unifProject = __WEBPACK_IMPORTED_MODULE_1__globals__["a" /* gl */].getUniformLocation(this.prog, "u_Project");
+        this.unifEye = __WEBPACK_IMPORTED_MODULE_1__globals__["a" /* gl */].getUniformLocation(this.prog, "u_Eye");
+        this.unifDimensions = __WEBPACK_IMPORTED_MODULE_1__globals__["a" /* gl */].getUniformLocation(this.prog, "u_Dimensions");
+        this.unifTime = __WEBPACK_IMPORTED_MODULE_1__globals__["a" /* gl */].getUniformLocation(this.prog, "u_Time");
     }
     use() {
         if (activeProgram !== this.prog) {
-            __WEBPACK_IMPORTED_MODULE_0__globals__["a" /* gl */].useProgram(this.prog);
+            __WEBPACK_IMPORTED_MODULE_1__globals__["a" /* gl */].useProgram(this.prog);
             activeProgram = this.prog;
+        }
+    }
+    setUnifDrawMode(drawM) {
+        this.use();
+        if (this.unifDrawMode !== -1) {
+            __WEBPACK_IMPORTED_MODULE_1__globals__["a" /* gl */].uniform1i(this.unifDrawMode, drawM);
+        }
+    }
+    setModelMatrix(model) {
+        this.use();
+        if (this.unifModel !== -1) {
+            __WEBPACK_IMPORTED_MODULE_1__globals__["a" /* gl */].uniformMatrix4fv(this.unifModel, false, model);
+        }
+        if (this.unifModelInvTr !== -1) {
+            let modelinvtr = __WEBPACK_IMPORTED_MODULE_0_gl_matrix__["a" /* mat4 */].create();
+            __WEBPACK_IMPORTED_MODULE_0_gl_matrix__["a" /* mat4 */].transpose(modelinvtr, model);
+            __WEBPACK_IMPORTED_MODULE_0_gl_matrix__["a" /* mat4 */].invert(modelinvtr, modelinvtr);
+            __WEBPACK_IMPORTED_MODULE_1__globals__["a" /* gl */].uniformMatrix4fv(this.unifModelInvTr, false, modelinvtr);
         }
     }
     // TODO: add functions to modify uniforms
     setEye(eye) {
         this.use();
         if (this.unifEye !== -1) {
-            __WEBPACK_IMPORTED_MODULE_0__globals__["a" /* gl */].uniform3fv(this.unifEye, eye);
+            __WEBPACK_IMPORTED_MODULE_1__globals__["a" /* gl */].uniform3fv(this.unifEye, eye);
         }
     }
     setDimensions(dimensions) {
         this.use();
         if (this.unifDimensions !== -1) {
-            __WEBPACK_IMPORTED_MODULE_0__globals__["a" /* gl */].uniform2fv(this.unifDimensions, dimensions);
+            __WEBPACK_IMPORTED_MODULE_1__globals__["a" /* gl */].uniform2fv(this.unifDimensions, dimensions);
         }
     }
     setViewMatrix(vp) {
         this.use();
         if (this.unifView !== -1) {
-            __WEBPACK_IMPORTED_MODULE_0__globals__["a" /* gl */].uniformMatrix4fv(this.unifView, false, vp);
+            __WEBPACK_IMPORTED_MODULE_1__globals__["a" /* gl */].uniformMatrix4fv(this.unifView, false, vp);
         }
     }
     setProjectionMatrix(pp) {
         this.use();
         if (this.unifProject !== -1) {
-            __WEBPACK_IMPORTED_MODULE_0__globals__["a" /* gl */].uniformMatrix4fv(this.unifProject, false, pp);
+            __WEBPACK_IMPORTED_MODULE_1__globals__["a" /* gl */].uniformMatrix4fv(this.unifProject, false, pp);
         }
     }
     setTime(time) {
         this.use();
         if (this.unifTime !== -1) {
-            __WEBPACK_IMPORTED_MODULE_0__globals__["a" /* gl */].uniform1f(this.unifTime, time);
+            __WEBPACK_IMPORTED_MODULE_1__globals__["a" /* gl */].uniform1f(this.unifTime, time);
         }
     }
     draw(d) {
         this.use();
         if (this.attrPos != -1 && d.bindPos()) {
-            __WEBPACK_IMPORTED_MODULE_0__globals__["a" /* gl */].enableVertexAttribArray(this.attrPos);
-            __WEBPACK_IMPORTED_MODULE_0__globals__["a" /* gl */].vertexAttribPointer(this.attrPos, 4, __WEBPACK_IMPORTED_MODULE_0__globals__["a" /* gl */].FLOAT, false, 0, 0);
+            __WEBPACK_IMPORTED_MODULE_1__globals__["a" /* gl */].enableVertexAttribArray(this.attrPos);
+            __WEBPACK_IMPORTED_MODULE_1__globals__["a" /* gl */].vertexAttribPointer(this.attrPos, 4, __WEBPACK_IMPORTED_MODULE_1__globals__["a" /* gl */].FLOAT, false, 0, 0);
+        }
+        if (this.attrNor != -1 && d.bindNor()) {
+            __WEBPACK_IMPORTED_MODULE_1__globals__["a" /* gl */].enableVertexAttribArray(this.attrNor);
+            __WEBPACK_IMPORTED_MODULE_1__globals__["a" /* gl */].vertexAttribPointer(this.attrNor, 4, __WEBPACK_IMPORTED_MODULE_1__globals__["a" /* gl */].FLOAT, false, 0, 0);
         }
         d.bindIdx();
-        __WEBPACK_IMPORTED_MODULE_0__globals__["a" /* gl */].drawElements(d.drawMode(), d.elemCount(), __WEBPACK_IMPORTED_MODULE_0__globals__["a" /* gl */].UNSIGNED_INT, 0);
+        __WEBPACK_IMPORTED_MODULE_1__globals__["a" /* gl */].drawElements(d.drawMode(), d.elemCount(), __WEBPACK_IMPORTED_MODULE_1__globals__["a" /* gl */].UNSIGNED_INT, 0);
         if (this.attrPos != -1)
-            __WEBPACK_IMPORTED_MODULE_0__globals__["a" /* gl */].disableVertexAttribArray(this.attrPos);
+            __WEBPACK_IMPORTED_MODULE_1__globals__["a" /* gl */].disableVertexAttribArray(this.attrPos);
+        if (this.attrNor != -1)
+            __WEBPACK_IMPORTED_MODULE_1__globals__["a" /* gl */].disableVertexAttribArray(this.attrNor);
     }
 }
 ;
@@ -15119,15 +15215,349 @@ class ShaderProgram {
 
 /***/ }),
 /* 64 */
-/***/ (function(module, exports) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-module.exports = "#version 300 es\n\nprecision highp float;\n\nin vec4 vs_Pos;\nout vec4 fs_Pos;\n\nvoid main() {\n\t// TODO: Pass relevant info to fragment\n\tgl_Position = vs_Pos;\n}\n"
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_gl_matrix__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__rendering_gl_Drawable__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__globals__ = __webpack_require__(2);
+
+
+
+class MarchCube extends __WEBPACK_IMPORTED_MODULE_1__rendering_gl_Drawable__["a" /* default */] {
+    constructor(center) {
+        super(); // Call the constructor of the super class. This is required.
+        this.center = __WEBPACK_IMPORTED_MODULE_0_gl_matrix__["d" /* vec4 */].fromValues(center[0], center[1], center[2], 1);
+        this.drawType = __WEBPACK_IMPORTED_MODULE_2__globals__["a" /* gl */].POINTS; //gl.LINES;
+        this.tempRefScale = __WEBPACK_IMPORTED_MODULE_0_gl_matrix__["c" /* vec3 */].fromValues(1.0, 1.0, 1.0);
+        this.tempRefTrans = __WEBPACK_IMPORTED_MODULE_0_gl_matrix__["c" /* vec3 */].fromValues(0.0, 0.0, 0.0);
+        this.divisions = 10.0;
+    }
+    setScaleTrans(scale, trans) {
+        __WEBPACK_IMPORTED_MODULE_0_gl_matrix__["c" /* vec3 */].copy(this.tempRefScale, scale);
+        __WEBPACK_IMPORTED_MODULE_0_gl_matrix__["c" /* vec3 */].copy(this.tempRefTrans, trans);
+    }
+    setDrawType(drawT) {
+        // IF DRAWTYPE IS DIFFERENT, MUST RECREATE
+        this.drawType = drawT;
+    }
+    drawMode() {
+        return this.drawType;
+    }
+    generateCubes() {
+        // OKAY instead of this, have shader write out values to texture,
+        // eight floats for each cube
+    }
+    create() {
+        if (this.drawType == __WEBPACK_IMPORTED_MODULE_2__globals__["a" /* gl */].TRIANGLES) {
+            this.indices = new Uint32Array([0, 1, 2, 0, 2, 3,
+                4, 5, 6, 4, 6, 7,
+                8, 9, 10, 8, 10, 11,
+                12, 13, 14, 12, 14, 15,
+                16, 17, 18, 16, 18, 19,
+                20, 21, 22, 20, 22, 23]); //back
+            this.normals = new Float32Array([
+                0, 0, 1, 0,
+                0, 0, 1, 0,
+                0, 0, 1, 0,
+                0, 0, 1, 0,
+                // right quad          
+                1, 0, 0, 0,
+                1, 0, 0, 0,
+                1, 0, 0, 0,
+                1, 0, 0, 0,
+                // upper quad          
+                0, 1, 0, 0,
+                0, 1, 0, 0,
+                0, 1, 0, 0,
+                0, 1, 0, 0,
+                // left quad           
+                -1, 0, 0, 0,
+                -1, 0, 0, 0,
+                -1, 0, 0, 0,
+                -1, 0, 0, 0,
+                // lower quad          
+                0, -1, 0, 0,
+                0, -1, 0, 0,
+                0, -1, 0, 0,
+                0, -1, 0, 0,
+                // back quad           
+                0, 0, -1, 0,
+                0, 0, -1, 0,
+                0, 0, -1, 0,
+                0, 0, -1, 0
+            ]);
+            this.positions = new Float32Array([
+                -1, -1, 1, 1,
+                1, -1, 1, 1,
+                1, 1, 1, 1,
+                -1, 1, 1, 1,
+                // right quad
+                1, 1, 1, 1,
+                1, 1, -1, 1,
+                1, -1, -1, 1,
+                1, -1, 1, 1,
+                // upper quad
+                1, 1, 1, 1,
+                1, 1, -1, 1,
+                -1, 1, -1, 1,
+                -1, 1, 1, 1,
+                // left quad
+                -1, 1, 1, 1,
+                -1, 1, -1, 1,
+                -1, -1, -1, 1,
+                -1, -1, 1, 1,
+                // lower quad
+                -1, -1, 1, 1,
+                -1, -1, -1, 1,
+                1, -1, -1, 1,
+                1, -1, 1, 1,
+                // back quad
+                -1, -1, -1, 1,
+                1, -1, -1, 1,
+                1, 1, -1, 1,
+                -1, 1, -1, 1
+            ]); //23
+        }
+        else if (this.drawType == __WEBPACK_IMPORTED_MODULE_2__globals__["a" /* gl */].LINES) {
+            // Tracking variables
+            let maxIndexCount = Math.pow(this.divisions + 1, 3);
+            let maxVertexCount = maxIndexCount * 4;
+            this.indices = new Uint32Array(maxIndexCount);
+            this.positions = new Float32Array(maxVertexCount);
+            let idxNum = 0;
+            let delta = 2.0 / this.divisions;
+            // Vertex loop
+            for (let x = -1.0; x <= 1.0; x += delta) {
+                for (let y = -1.0; y <= 1.0; y += delta) {
+                    for (let z = -1.0; z <= 1.0; z += delta) {
+                        this.positions[4 * idxNum] = x * this.tempRefScale[0] + this.tempRefTrans[0];
+                        this.positions[4 * idxNum + 1] = y * this.tempRefScale[1] + this.tempRefTrans[1];
+                        this.positions[4 * idxNum + 2] = z * this.tempRefScale[2] + this.tempRefTrans[2];
+                        this.positions[4 * idxNum + 3] = 1.0;
+                        this.indices[idxNum] = idxNum;
+                        idxNum++;
+                    }
+                }
+            }
+        }
+        else if (this.drawType == __WEBPACK_IMPORTED_MODULE_2__globals__["a" /* gl */].POINTS) {
+            // Tracking variables
+            let maxIndexCount = Math.pow(this.divisions + 1, 3);
+            let maxVertexCount = maxIndexCount * 4;
+            this.indices = new Uint32Array(maxIndexCount);
+            this.positions = new Float32Array(maxVertexCount);
+            let idxNum = 0;
+            let delta = 2.0 / this.divisions;
+            let mmX = this.tempRefScale[0];
+            let mmY = this.tempRefScale[1];
+            let mmZ = this.tempRefScale[2];
+            // Vertex loop
+            for (let x = -1.0; x <= 1.0; x += delta) {
+                for (let y = -1.0; y <= 1.0; y += delta) {
+                    for (let z = -1.0; z <= 1.0; z += delta) {
+                        this.positions[4 * idxNum] = x * this.tempRefScale[0] + this.tempRefTrans[0];
+                        this.positions[4 * idxNum + 1] = y * this.tempRefScale[1] + this.tempRefTrans[1];
+                        this.positions[4 * idxNum + 2] = z * this.tempRefScale[2] + this.tempRefTrans[2];
+                        this.positions[4 * idxNum + 3] = 1.0;
+                        this.indices[idxNum] = idxNum; /*((x + 1.0) / 2.0 * this.divisions) +
+                                               this.divisions * (((y + 1.0) / 2.0 * this.divisions) +
+                                               this.divisions * ((z + 1.0) / 2.0 * this.divisions));*/
+                        idxNum++;
+                    }
+                }
+            }
+        }
+        this.generateIdx();
+        this.generatePos();
+        this.count = this.indices.length;
+        __WEBPACK_IMPORTED_MODULE_2__globals__["a" /* gl */].bindBuffer(__WEBPACK_IMPORTED_MODULE_2__globals__["a" /* gl */].ELEMENT_ARRAY_BUFFER, this.bufIdx);
+        __WEBPACK_IMPORTED_MODULE_2__globals__["a" /* gl */].bufferData(__WEBPACK_IMPORTED_MODULE_2__globals__["a" /* gl */].ELEMENT_ARRAY_BUFFER, this.indices, __WEBPACK_IMPORTED_MODULE_2__globals__["a" /* gl */].STATIC_DRAW);
+        if (this.drawType == __WEBPACK_IMPORTED_MODULE_2__globals__["a" /* gl */].TRIANGLES) {
+            this.generateNor();
+            __WEBPACK_IMPORTED_MODULE_2__globals__["a" /* gl */].bindBuffer(__WEBPACK_IMPORTED_MODULE_2__globals__["a" /* gl */].ARRAY_BUFFER, this.bufNor);
+            __WEBPACK_IMPORTED_MODULE_2__globals__["a" /* gl */].bufferData(__WEBPACK_IMPORTED_MODULE_2__globals__["a" /* gl */].ARRAY_BUFFER, this.normals, __WEBPACK_IMPORTED_MODULE_2__globals__["a" /* gl */].STATIC_DRAW);
+        }
+        __WEBPACK_IMPORTED_MODULE_2__globals__["a" /* gl */].bindBuffer(__WEBPACK_IMPORTED_MODULE_2__globals__["a" /* gl */].ARRAY_BUFFER, this.bufPos);
+        __WEBPACK_IMPORTED_MODULE_2__globals__["a" /* gl */].bufferData(__WEBPACK_IMPORTED_MODULE_2__globals__["a" /* gl */].ARRAY_BUFFER, this.positions, __WEBPACK_IMPORTED_MODULE_2__globals__["a" /* gl */].STATIC_DRAW);
+        console.log(`Created MarchCube`);
+    }
+}
+;
+/* harmony default export */ __webpack_exports__["a"] = (MarchCube);
+
 
 /***/ }),
 /* 65 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony default export */ __webpack_exports__["a"] = (function(params) {
+  return `
+  #version 100
+  precision highp float;
+  
+  uniform sampler2D u_gbuffers[${params.numGBuffers}];
+
+  // From ForwardPlus
+  uniform sampler2D u_lightbuffer;
+
+  // Read this buffer to determine the lights influencing a cluster
+  uniform sampler2D u_clusterbuffer;
+
+  uniform mat4 u_viewMatrix;
+  uniform float u_SA;
+  uniform float u_S;
+  uniform float u_maxDist;
+  
+  varying vec2 v_uv;
+
+  // Also from forwardPlusFrag
+  struct Light {
+    vec3 position;
+    float radius;
+    vec3 color;
+  };
+
+  float ExtractFloat(sampler2D texture, int textureWidth, int textureHeight, int index, int component) {
+    float u = float(index + 1) / float(textureWidth + 1);
+    int pixel = component / 4;
+    float v = float(pixel + 1) / float(textureHeight + 1);
+    vec4 texel = texture2D(texture, vec2(u, v));
+    int pixelComponent = component - pixel * 4;
+    if (pixelComponent == 0) {
+      return texel[0];
+    } else if (pixelComponent == 1) {
+      return texel[1];
+    } else if (pixelComponent == 2) {
+      return texel[2];
+    } else if (pixelComponent == 3) {
+      return texel[3];
+    }
+  }
+
+  Light UnpackLight(int index) {
+    Light light;
+    float u = float(index + 1) / float(${params.numLights + 1});
+    vec4 v1 = texture2D(u_lightbuffer, vec2(u, 0.3));
+    vec4 v2 = texture2D(u_lightbuffer, vec2(u, 0.6));
+    light.position = v1.xyz;
+
+    // LOOK: This extracts the 4th float (radius) of the (index)th light in the buffer
+    // Note that this is just an example implementation to extract one float.
+    // There are more efficient ways if you need adjacent values
+    light.radius = ExtractFloat(u_lightbuffer, ${params.numLights}, 2, index, 3);
+
+    light.color = v2.rgb;
+    return light;
+  }
+
+  // Cubic approximation of gaussian curve so we falloff to exactly 0 at the light radius
+  float cubicGaussian(float h) {
+    if (h < 1.0) {
+      return 0.25 * pow(2.0 - h, 3.0) - pow(1.0 - h, 3.0);
+    } else if (h < 2.0) {
+      return 0.25 * pow(2.0 - h, 3.0);
+    } else {
+      return 0.0;
+    }
+  }
+  
+  void main() {
+    // TODO: extract data from g buffers and do lighting
+    vec4 gb0 = texture2D(u_gbuffers[0], v_uv);
+    vec4 gb1 = texture2D(u_gbuffers[1], v_uv);
+
+    // Inspired by https://stackoverflow.com/questions/29251819/efficient-way-to-store-3d-normal-vector-using-two-floats 
+    float nx = gb0.a;
+    float ny = gb1.a;
+    float a = nx - ny;
+    float b = nx + ny;
+    float nz = sqrt(1.0 - a * a - b * b);
+    
+    vec3 g_normal = normalize(vec3(nx, ny, nz));
+    vec3 g_position = gb0.xyz;
+    vec3 albedo = gb1.rgb;
+
+    // Slices from params
+    int xS = int(${params.xSlice});
+    int yS = int(${params.ySlice});
+    int zS = int(${params.zSlice});
+
+    vec3 fragColor = vec3(0.0);
+
+    // Cluster Computation 
+    vec4 camPos = u_viewMatrix * vec4(g_position, 1.0);
+    camPos.z *= -1.0;
+    float wDiv = camPos.z;
+    vec3 clust = vec3(floor((u_SA * camPos.x / wDiv + 1.0) / 2.0 * float(xS)),     
+                      floor((u_S  * camPos.y / wDiv + 1.0) / 2.0 * float(yS)),     
+                      floor((camPos.z / u_maxDist) * float(zS))); 
+
+    // Cluster data
+    int idx = int(clust.x) + int(clust.y) * xS + int(clust.z) * xS * yS;
+    int count = xS * yS * zS;
+    int textureHeight = int(ceil((float(${params.maxNumLights}) + 1.0) / 4.0));
+    //  -Similar to UnpackLight, but cluster indices instead of lights
+    float u = float(idx + 1) / float(count + 1);
+    float numLts = texture2D(u_clusterbuffer, vec2(u, 0.0)).x;
+    
+
+    // Compute light influence
+    for (int i = 1; i <= int(${params.maxNumLights}); ++i) {
+      if (i > int(numLts)) {
+        break;
+      }
+      // Extract the float stored at each light index, offput by 1 because of how we stored numLights
+      int l = int(ExtractFloat(u_clusterbuffer, count, textureHeight + 1, idx, i));
+      
+      Light light = UnpackLight(l);
+      float lightDistance = distance(light.position, g_position);
+      vec3 L = (light.position - g_position) / lightDistance;
+
+      float lambertTerm = max(dot(normalize(L), g_normal), 0.0);
+      
+      // Comment for BlinnPhong
+      float lightIntensity = cubicGaussian(2.0 * lightDistance / light.radius);
+      fragColor += albedo * lambertTerm * light.color * vec3(lightIntensity);
+      /*float spec = max(pow(lambertTerm, 35.0), 0.0);
+      fragColor += albedo * lambertTerm * light.color * vec3(spec);*/
+    }
+
+
+
+    const vec3 ambientLight = vec3(0.1);
+    fragColor += albedo * ambientLight;
+
+
+    gl_FragColor = vec4(fragColor, 1.0);
+  }
+  `;
+});
+
+/***/ }),
+/* 66 */
 /***/ (function(module, exports) {
 
-module.exports = "#version 300 es\n\nprecision highp float;\n\nuniform mat4 u_View;\nuniform mat4 u_Project;\nuniform vec3 u_Eye;\nuniform vec2 u_Dimensions;\nuniform float u_Time;\n\nin vec4 fs_Pos;\n//in vec4 gl_FragCoord;\n\nout vec4 out_Col;\n\n\nfloat EPSILON = 0.0001;\nfloat CLIP = 100.f;\n\n// Smooth minimum from IQ\nfloat smin( float a, float b, float k) {\n    float res = exp(-k * a) + exp(-k * b);\n    return -log(res) / k;\n}\n\n\nfloat arm(vec3 pos) {\n\treturn smin(length(pos + vec3(0.1, -0.1, 0.2)) - 0.2f, length(vec3(pos.x, pos.y * 0.5, pos.z)) - 0.2f, 16.f);\n}\n\nfloat eye(vec3 pos, float degrees) {\n\t\n\t// Tilts the eyes\n\tfloat c = cos(radians(degrees));\n    float s = sin(radians(degrees));\n    mat3  mZ = mat3(c, s, 0.f, -s, c, 0.f, 0.f, 0.f, 1.f);     \t\t\t\t\t\t\t// Z-axis rotation\n\tmat3  mY = mat3(cos(radians(-degrees / 1.4f)), 0.f, -sin(radians(-degrees / 1.4f)), // Y-axis rotation\n\t\t\t\t\t0.f, 1.f, 0.f, \n\t\t\t\t\tsin(radians(-degrees / 1.4f)), 0.f, cos(radians(-degrees / 1.4f)));\n\n\t// The main eyeball\n\tvec3  eye = mY * mZ * (vec3(pos.x + degrees * 0.0215, pos.y * 0.85 - 0.05, pos.z * 1.5f + 0.38f));\n\n\t// The surrounding torus\n    vec3  outline = mY * mZ * pos;\n\tvec2 t = vec2(0.25, 0.05);\n\tvec2 d = vec2(length(outline.xy * vec2(0.75, 0.65)) - t.x, outline.z);\n\n\tfloat iris = length(vec3(pos.x + degrees * 0.0035, pos.y * 0.85, pos.z * 1.7 - 0.07f)) - 0.13;\n\t\t\t\t\t \n  \treturn min(iris, min(length(d) - t.y, length(eye) - 0.5));\n}\n\nfloat box(vec3 p, vec3 b)\n{\n  vec3 d = abs(p) - b;\n  return min(max(d.x,max(d.y,d.z)),0.0) + length(max(d,0.0));\n}\n\n// Sphere from IQ - used for Cappy's Body\nfloat sphere(vec3 pos) {\n\treturn length(pos) - 0.97f;\n}\n\nfloat body(vec3 p, vec2 h) { // major warping of IQ's capped cylinder function\n  \tvec2 d = abs(vec2(length(p.xy), p.z)) - (h * vec2(p.z / 2.3f - sin(12.f * p.z) * 0.03 * (p.z - 2.f) * 1.2f, 1.f));\n  \treturn min(max(d.x,d.y),0.0) + length(max(d,0.0));\n}\n\n// Cylinder from IQ - used for Cappy's Hat\nfloat sdCappedCylinder(vec3 p, vec2 h, float f) {\n  \tvec2 d = abs(vec2(length(p.xz), p.y)) - h;\n  \treturn min(max(d.x,d.y),0.0) + length(max(d,0.0)) - f;\n}\n\nfloat hatBrim(vec3 p, vec2 t) {   // Essentially a bent torus\n\tfloat c = cos(radians(12.0 * p.x));\n    float s = sin(radians(12.0 * p.x));\n    mat2  m = mat2(c, -s, s, c);\n    vec3  q = vec3(m * p.xy, p.z);\n  \tvec2 d = vec2(length(q.xz * 0.5) - t.x, q.y + 0.5);\n  \treturn length(d) - t.y;\n}\n\n// The main part of the hat, using bent and beveled cylinders\nfloat hatBase(vec3 p) {\n    float c = cos(radians(12.0 * p.y));\n    float s = sin(radians(12.0 * p.y));\n    mat2  m = mat2(c, -s, s, c);\n    vec3  q = vec3(m * p.zy, p.x);\n\tfloat scaleVal = p.y * 0.2 + 0.7;\n\t// Hat and ribbon!\n\treturn min(sdCappedCylinder(q + vec3(0.f, 0.2 * (1.f + cos(p.x)) - 0.25, 0.f), vec2(1.37f * scaleVal, 0.2f), 0.05), \n\t\t\t   sdCappedCylinder(q + vec3(0.f, -0.4f, 0.f), vec2(1.2f * scaleVal, 0.7f), 0.15));\n}\n\n// A DNA-like structure for a cool background\nfloat twirl( vec3 p, vec2 t )\n{\n\tfloat c = cos(p.y + u_Time * 0.1);\n    float s = sin(p.y + u_Time * 0.1);\n    mat2  m = mat2(c, -s, s, c);\n    vec3  q = vec3(m * p.xz, p.x);\n  \tvec2 d = vec2(length(q.xz) - t.x, q.y);\n  \treturn length(d) - t.y;\n}\n\n// Domain repetition from IQ\nfloat opRep(vec3 p, vec3 c) {\n    vec3 q = mod(p,c) - 0.5 * c;\n    return twirl(q, vec2(1.7f, 0.5f));\n}\n\n// My combination SDF\nfloat mySDF(vec3 pos) {\n\n\tvec3 bgPos = pos;\n\tpos = pos + vec3(0.f, sin(u_Time * 0.07) * 0.7, 0.f);\n\n\tfloat hat = min(hatBase(pos), hatBrim(pos * vec3(1.f, 1.f, 1.f), vec2(0.6f, 0.2f)));\n\tfloat yScale = 0.7f - pos.z / 2.2f;\n\tfloat bod = smin(sphere(pos + vec3(0.f, 0.7f, 0.03f)), \n\t\t\t\t\t body(pos + vec3(sin(3.f * pos.z) * 0.1, yScale + sin(10.f * pos.z) * 0.1, 1.93f), vec2(1.f , 1.7f)), 22.f);\n\tfloat arms = min(arm(pos - vec3(0.8f, -1.f, 1.f)), arm((pos - vec3(-0.8f, -1.f, 1.f)) * vec3(-1.f, 1.f, 1.f)));\n\tbod = smin(bod, arms, 20.f);\n\tfloat eyes = smin(eye(pos - vec3(0.34f, 0.25f, 0.98f), 23.f), eye(pos - vec3(-0.34f, 0.25f, 0.98f), -23.f), 100.f);\n\n\tfloat cappy = min(min(hat, bod), eyes);\n\tfloat backG = opRep(bgPos, vec3(15.f, 15.f, 15.f));\n\treturn min(cappy, backG);\n}\n\nvec3 estimateNormal(vec3 p) { \n\treturn normalize(vec3( \n\t\tmySDF(vec3(p.x + EPSILON, p.y, p.z)) - mySDF(vec3(p.x - EPSILON, p.y, p.z)), \n\t\tmySDF(vec3(p.x, p.y + EPSILON, p.z)) - mySDF(vec3(p.x, p.y - EPSILON, p.z)), \n\t\tmySDF(vec3(p.x, p.y, p.z + EPSILON)) - mySDF(vec3(p.x, p.y, p.z - EPSILON)) )); \n}\n\nvoid main() {\n\t// TODO: make a Raymarcher!\n\n\tvec3 pos = u_Eye;\n\n\t// Finds the furthest point in the background, used to compute rays\n\tfloat x = (gl_FragCoord.x / u_Dimensions.x) * 2.f - 1.f;\n\tfloat y = 1.f - (gl_FragCoord.y / u_Dimensions.y) * 2.f;\n\tvec4 bg = inverse(u_View) * inverse(u_Project) * vec4(x * -1000.f, y * -1000.f, 1000.f, 1000.f);\n\n\tvec3 dir = normalize(vec3(bg.x, bg.y, bg.z) - u_Eye);\n\n\tbool geo = false;\n\n\tfloat maxLoops = 0.f; // Ensures program doesn't crash\n\n\tfloat t = mySDF(pos);\n\tfloat dist = t;\n\n\twhile (t < CLIP && maxLoops < 100.f) {\n\t\tpos += t * dir;\n\t\tfloat i = mySDF(pos);\n\t\tdist += i;\n\t\tif (i < EPSILON && i > -0.-EPSILON) { //\n\t\t\tgeo = true;\n\t\t\tbreak;\n\t\t}\n\t\tt = i;\n\t\tmaxLoops++;\n\t}\n\n\n\tif (geo) {\n\t\tvec4 lightVec = vec4(5.f, 5.f, 3.f, 1.f) - vec4(pos, 1.f);\n\t\tfloat diffuse = dot(estimateNormal(pos), normalize(lightVec.xyz));\n    \tdiffuse = min(diffuse, 1.0);\n   \t\tdiffuse = max(diffuse, 0.0);\n\t\tdiffuse /= (dist * 0.1);\n\t\tfloat lightIntensity = diffuse * 0.6 + 0.2;\n\n\t\tout_Col = vec4(mix(vec3(0.5843, 0.898, 1.0) + vec3(1.0, 0.8627, 0.3686) *\n            cos(2.f * 3.14159265359 * (vec3(0.8353, 0.549, 0.1765) / lightIntensity +\n                vec3(0.511, 0.1176, 0.0902))) * lightIntensity, vec3(0.f, 0.f, 0.f), dist / CLIP), 1.0);\n\t} else {\n\t\t// Background gradient\n\t\tfloat glow = (dot(normalize(bg.xyz), vec3(0.f, 1.f, 0.f)) + 1.0) / 2.f;\n\t\tout_Col = vec4(mix(vec3(0.0, 1.0, 1.0), vec3(0.0, 0.0, 0.0), sqrt(glow)), 1.0);\n\t}\n}\n"
+module.exports = "#version 300 es\r\n\r\nprecision highp float;\r\n\r\nin vec4 vs_Pos;\r\nout vec4 fs_Pos;\r\n\r\nvoid main() {\r\n\t// TODO: Pass relevant info to fragment\r\n\tgl_Position = vs_Pos;\r\n}\r\n"
+
+/***/ }),
+/* 67 */
+/***/ (function(module, exports) {
+
+module.exports = "#version 300 es\r\n\r\nprecision highp float;\r\n\r\nuniform mat4 u_View;\r\nuniform mat4 u_Project;\r\nuniform vec3 u_Eye;\r\nuniform vec2 u_Dimensions;\r\nuniform float u_Time;\r\n\r\nin vec4 fs_Pos;\r\n//in vec4 gl_FragCoord;\r\n\r\nout vec4 out_Col;\r\n\r\n\r\nfloat EPSILON = 0.0001;\r\nfloat CLIP = 100.f;\r\n\r\n// Smooth minimum from IQ\r\nfloat smin( float a, float b, float k) {\r\n    float res = exp(-k * a) + exp(-k * b);\r\n    return -log(res) / k;\r\n}\r\n\r\n\r\nfloat arm(vec3 pos) {\r\n\treturn smin(length(pos + vec3(0.1, -0.1, 0.2)) - 0.2f, length(vec3(pos.x, pos.y * 0.5, pos.z)) - 0.2f, 16.f);\r\n}\r\n\r\nfloat eye(vec3 pos, float degrees) {\r\n\t\r\n\t// Tilts the eyes\r\n\tfloat c = cos(radians(degrees));\r\n    float s = sin(radians(degrees));\r\n    mat3  mZ = mat3(c, s, 0.f, -s, c, 0.f, 0.f, 0.f, 1.f);     \t\t\t\t\t\t\t// Z-axis rotation\r\n\tmat3  mY = mat3(cos(radians(-degrees / 1.4f)), 0.f, -sin(radians(-degrees / 1.4f)), // Y-axis rotation\r\n\t\t\t\t\t0.f, 1.f, 0.f, \r\n\t\t\t\t\tsin(radians(-degrees / 1.4f)), 0.f, cos(radians(-degrees / 1.4f)));\r\n\r\n\t// The main eyeball\r\n\tvec3  eye = mY * mZ * (vec3(pos.x + degrees * 0.0215, pos.y * 0.85 - 0.05, pos.z * 1.5f + 0.38f));\r\n\r\n\t// The surrounding torus\r\n    vec3  outline = mY * mZ * pos;\r\n\tvec2 t = vec2(0.25, 0.05);\r\n\tvec2 d = vec2(length(outline.xy * vec2(0.75, 0.65)) - t.x, outline.z);\r\n\r\n\tfloat iris = length(vec3(pos.x + degrees * 0.0035, pos.y * 0.85, pos.z * 1.7 - 0.07f)) - 0.13;\r\n\t\t\t\t\t \r\n  \treturn min(iris, min(length(d) - t.y, length(eye) - 0.5));\r\n}\r\n\r\nfloat box(vec3 p, vec3 b)\r\n{\r\n  vec3 d = abs(p) - b;\r\n  return min(max(d.x,max(d.y,d.z)),0.0) + length(max(d,0.0));\r\n}\r\n\r\n// Sphere from IQ - used for Cappy's Body\r\nfloat sphere(vec3 pos) {\r\n\treturn length(pos) - 0.97f;\r\n}\r\n\r\nfloat body(vec3 p, vec2 h) { // major warping of IQ's capped cylinder function\r\n  \tvec2 d = abs(vec2(length(p.xy), p.z)) - (h * vec2(p.z / 2.3f - sin(12.f * p.z) * 0.03 * (p.z - 2.f) * 1.2f, 1.f));\r\n  \treturn min(max(d.x,d.y),0.0) + length(max(d,0.0));\r\n}\r\n\r\n// Cylinder from IQ - used for Cappy's Hat\r\nfloat sdCappedCylinder(vec3 p, vec2 h, float f) {\r\n  \tvec2 d = abs(vec2(length(p.xz), p.y)) - h;\r\n  \treturn min(max(d.x,d.y),0.0) + length(max(d,0.0)) - f;\r\n}\r\n\r\nfloat hatBrim(vec3 p, vec2 t) {   // Essentially a bent torus\r\n\tfloat c = cos(radians(12.0 * p.x));\r\n    float s = sin(radians(12.0 * p.x));\r\n    mat2  m = mat2(c, -s, s, c);\r\n    vec3  q = vec3(m * p.xy, p.z);\r\n  \tvec2 d = vec2(length(q.xz * 0.5) - t.x, q.y + 0.5);\r\n  \treturn length(d) - t.y;\r\n}\r\n\r\n// The main part of the hat, using bent and beveled cylinders\r\nfloat hatBase(vec3 p) {\r\n    float c = cos(radians(12.0 * p.y));\r\n    float s = sin(radians(12.0 * p.y));\r\n    mat2  m = mat2(c, -s, s, c);\r\n    vec3  q = vec3(m * p.zy, p.x);\r\n\tfloat scaleVal = p.y * 0.2 + 0.7;\r\n\t// Hat and ribbon!\r\n\treturn min(sdCappedCylinder(q + vec3(0.f, 0.2 * (1.f + cos(p.x)) - 0.25, 0.f), vec2(1.37f * scaleVal, 0.2f), 0.05), \r\n\t\t\t   sdCappedCylinder(q + vec3(0.f, -0.4f, 0.f), vec2(1.2f * scaleVal, 0.7f), 0.15));\r\n}\r\n\r\n// My combination SDF\r\nfloat mySDF(vec3 pos) {\r\n\r\n\tvec3 bgPos = pos;\r\n\tpos = pos + vec3(0.f, sin(0.07) * 0.7, 0.f);\r\n\r\n\tfloat hat = min(hatBase(pos), hatBrim(pos * vec3(1.f, 1.f, 1.f), vec2(0.6f, 0.2f)));\r\n\tfloat yScale = 0.7f - pos.z / 2.2f;\r\n\tfloat bod = smin(sphere(pos + vec3(0.f, 0.7f, 0.03f)), \r\n\t\t\t\t\t body(pos + vec3(sin(3.f * pos.z) * 0.1, yScale + sin(10.f * pos.z) * 0.1, 1.93f), vec2(1.f , 1.7f)), 22.f);\r\n\tfloat arms = min(arm(pos - vec3(0.8f, -1.f, 1.f)), arm((pos - vec3(-0.8f, -1.f, 1.f)) * vec3(-1.f, 1.f, 1.f)));\r\n\tbod = smin(bod, arms, 20.f);\r\n\tfloat eyes = smin(eye(pos - vec3(0.34f, 0.25f, 0.98f), 23.f), eye(pos - vec3(-0.34f, 0.25f, 0.98f), -23.f), 100.f);\r\n\r\n\tfloat cappy = min(min(hat, bod), eyes);\r\n\treturn cappy;//min(cappy, box(pos - vec3(0.f, -0.1f, -0.2f), vec3(1.7f, 1.7f, 1.8f)));\r\n}\r\n\r\nvec3 estimateNormal(vec3 p) { \r\n\treturn normalize(vec3( \r\n\t\tmySDF(vec3(p.x + EPSILON, p.y, p.z)) - mySDF(vec3(p.x - EPSILON, p.y, p.z)), \r\n\t\tmySDF(vec3(p.x, p.y + EPSILON, p.z)) - mySDF(vec3(p.x, p.y - EPSILON, p.z)), \r\n\t\tmySDF(vec3(p.x, p.y, p.z + EPSILON)) - mySDF(vec3(p.x, p.y, p.z - EPSILON)) )); \r\n}\r\n\r\nvoid main() {\r\n\t// TODO: make a Raymarcher!\r\n\r\n\tvec3 pos = u_Eye;\r\n\r\n\t// Finds the furthest point in the background, used to compute rays\r\n\tfloat x = (gl_FragCoord.x / u_Dimensions.x) * 2.f - 1.f;\r\n\tfloat y = 1.f - (gl_FragCoord.y / u_Dimensions.y) * 2.f;\r\n\tvec4 bg = inverse(u_View) * inverse(u_Project) * vec4(x * 1000.f, y * -1000.f, 1000.f, 1000.f);\r\n\r\n\tvec3 dir = normalize(vec3(bg.x, bg.y, bg.z) - u_Eye);\r\n\r\n\tbool geo = false;\r\n\r\n\tfloat maxLoops = 0.f; // Ensures program doesn't crash\r\n\r\n\tfloat t = mySDF(pos);\r\n\tfloat dist = t;\r\n\r\n\twhile (t < CLIP && maxLoops < 100.f) {\r\n\t\tpos += t * dir;\r\n\t\tfloat i = mySDF(pos);\r\n\t\tdist += i;\r\n\t\tif (i < EPSILON && i > -0.-EPSILON) { //\r\n\t\t\tgeo = true;\r\n\t\t\tbreak;\r\n\t\t}\r\n\t\tt = i;\r\n\t\tmaxLoops++;\r\n\t}\r\n\r\n\r\n\tif (geo) {\r\n\t\tvec4 lightVec = vec4(5.f, 5.f, 3.f, 1.f) - vec4(pos, 1.f);\r\n\t\tfloat diffuse = dot(estimateNormal(pos), normalize(lightVec.xyz));\r\n    \tdiffuse = min(diffuse, 1.0);\r\n   \t\tdiffuse = max(diffuse, 0.0);\r\n\t\tdiffuse /= (dist * 0.1);\r\n\t\tfloat lightIntensity = diffuse * 0.6 + 0.2;\r\n\r\n\t\tout_Col = vec4(mix(vec3(0.5843, 0.898, 1.0) + vec3(1.0, 0.8627, 0.3686) *\r\n            cos(2.f * 3.14159265359 * (vec3(0.8353, 0.549, 0.1765) / lightIntensity +\r\n                vec3(0.511, 0.1176, 0.0902))) * lightIntensity, vec3(0.f, 0.f, 0.f), dist / CLIP), 1.0);\r\n\t} else {\r\n\t\t// Background gradient\r\n\t\tfloat glow = (dot(normalize(bg.xyz), vec3(0.f, 1.f, 0.f)) + 1.0) / 2.f;\r\n\t\tout_Col = vec4(mix(vec3(0.0, 1.0, 1.0), vec3(0.0, 0.0, 0.0), sqrt(glow)), 1.0);\r\n\t}\r\n}\r\n"
+
+/***/ }),
+/* 68 */
+/***/ (function(module, exports) {
+
+module.exports = "#version 300 es\r\n\r\nprecision highp float;\r\nprecision highp int;\r\n\r\nuniform int u_DrawMode;\r\nuniform vec3 u_Eye;\r\n\r\nuniform mat4 u_Model;       // The matrix that defines the transformation of the\r\n                            // object we're rendering. In this assignment,\r\n                            // this will be the result of traversing your scene graph.\r\n\r\nuniform mat4 u_ModelInvTr;  // The inverse transpose of the model matrix.\r\n                            // This allows us to transform the object's normals properly\r\n                            // if the object has been non-uniformly scaled.\r\n\r\nuniform mat4 u_View; \r\nuniform mat4 u_Project;\r\n\r\nin vec4 vs_Pos;             // The array of vertex positions passed to the shader\r\n\r\nin vec4 vs_Nor;             // The array of vertex normals passed to the shader\r\n\r\nout vec4 fs_Nor;            // The array of normals that has been transformed by u_ModelInvTr. This is implicitly passed to the fragment shader.\r\nout vec4 fs_LightVec;       // The direction in which our virtual light lies, relative to each vertex. This is implicitly passed to the fragment shader.\r\nout vec4 fs_Pos;\r\nout vec4 fs_Col;\r\n\r\nconst vec4 lightPos = vec4(5, 5, 3, 1); //The position of our virtual light, which is used to compute the shading of\r\n                                        //the geometry in the fragment shader.\r\n\r\n\r\nfloat EPSILON = 0.0001;\r\nfloat CLIP = 100.f;\r\n\r\n// Smooth minimum from IQ\r\nfloat smin( float a, float b, float k) {\r\n    float res = exp(-k * a) + exp(-k * b);\r\n    return -log(res) / k;\r\n}\r\n\r\n\r\nfloat arm(vec3 pos) {\r\n\treturn smin(length(pos + vec3(0.1, -0.1, 0.2)) - 0.2f, length(vec3(pos.x, pos.y * 0.5, pos.z)) - 0.2f, 16.f);\r\n}\r\n\r\nfloat eye(vec3 pos, float degrees) {\r\n\t\r\n\t// Tilts the eyes\r\n\tfloat c = cos(radians(degrees));\r\n    float s = sin(radians(degrees));\r\n    mat3  mZ = mat3(c, s, 0.f, -s, c, 0.f, 0.f, 0.f, 1.f);     \t\t\t\t\t\t\t// Z-axis rotation\r\n\tmat3  mY = mat3(cos(radians(-degrees / 1.4f)), 0.f, -sin(radians(-degrees / 1.4f)), // Y-axis rotation\r\n\t\t\t\t\t0.f, 1.f, 0.f, \r\n\t\t\t\t\tsin(radians(-degrees / 1.4f)), 0.f, cos(radians(-degrees / 1.4f)));\r\n\r\n\t// The main eyeball\r\n\tvec3  eye = mY * mZ * (vec3(pos.x + degrees * 0.0215, pos.y * 0.85 - 0.05, pos.z * 1.5f + 0.38f));\r\n\r\n\t// The surrounding torus\r\n    vec3  outline = mY * mZ * pos;\r\n\tvec2 t = vec2(0.25, 0.05);\r\n\tvec2 d = vec2(length(outline.xy * vec2(0.75, 0.65)) - t.x, outline.z);\r\n\r\n\tfloat iris = length(vec3(pos.x + degrees * 0.0035, pos.y * 0.85, pos.z * 1.7 - 0.07f)) - 0.13;\r\n\t\t\t\t\t \r\n  \treturn min(iris, min(length(d) - t.y, length(eye) - 0.5));\r\n}\r\n\r\nfloat box(vec3 p, vec3 b)\r\n{\r\n  vec3 d = abs(p) - b;\r\n  return min(max(d.x,max(d.y,d.z)),0.0) + length(max(d,0.0));\r\n}\r\n\r\n// Sphere from IQ - used for Cappy's Body\r\nfloat sphere(vec3 pos) {\r\n\treturn length(pos) - 0.97f;\r\n}\r\n\r\nfloat body(vec3 p, vec2 h) { // major warping of IQ's capped cylinder function\r\n  \tvec2 d = abs(vec2(length(p.xy), p.z)) - (h * vec2(p.z / 2.3f - sin(12.f * p.z) * 0.03 * (p.z - 2.f) * 1.2f, 1.f));\r\n  \treturn min(max(d.x,d.y),0.0) + length(max(d,0.0));\r\n}\r\n\r\n// Cylinder from IQ - used for Cappy's Hat\r\nfloat sdCappedCylinder(vec3 p, vec2 h, float f) {\r\n  \tvec2 d = abs(vec2(length(p.xz), p.y)) - h;\r\n  \treturn min(max(d.x,d.y),0.0) + length(max(d,0.0)) - f;\r\n}\r\n\r\nfloat hatBrim(vec3 p, vec2 t) {   // Essentially a bent torus\r\n\tfloat c = cos(radians(12.0 * p.x));\r\n    float s = sin(radians(12.0 * p.x));\r\n    mat2  m = mat2(c, -s, s, c);\r\n    vec3  q = vec3(m * p.xy, p.z);\r\n  \tvec2 d = vec2(length(q.xz * 0.5) - t.x, q.y + 0.5);\r\n  \treturn length(d) - t.y;\r\n}\r\n\r\n// The main part of the hat, using bent and beveled cylinders\r\nfloat hatBase(vec3 p) {\r\n    float c = cos(radians(12.0 * p.y));\r\n    float s = sin(radians(12.0 * p.y));\r\n    mat2  m = mat2(c, -s, s, c);\r\n    vec3  q = vec3(m * p.zy, p.x);\r\n\tfloat scaleVal = p.y * 0.2 + 0.7;\r\n\t// Hat and ribbon!\r\n\treturn min(sdCappedCylinder(q + vec3(0.f, 0.2 * (1.f + cos(p.x)) - 0.25, 0.f), vec2(1.37f * scaleVal, 0.2f), 0.05), \r\n\t\t\t   sdCappedCylinder(q + vec3(0.f, -0.4f, 0.f), vec2(1.2f * scaleVal, 0.7f), 0.15));\r\n}\r\n\r\n// My combination SDF\r\nfloat mySDF(vec3 pos) {\r\n\r\n\tvec3 bgPos = pos;\r\n\tpos = pos + vec3(0.f, sin(0.07) * 0.7, 0.f);\r\n\r\n\tfloat hat = min(hatBase(pos), hatBrim(pos * vec3(1.f, 1.f, 1.f), vec2(0.6f, 0.2f)));\r\n\tfloat yScale = 0.7f - pos.z / 2.2f;\r\n\tfloat bod = smin(sphere(pos + vec3(0.f, 0.7f, 0.03f)), \r\n\t\t\t\t\t body(pos + vec3(sin(3.f * pos.z) * 0.1, yScale + sin(10.f * pos.z) * 0.1, 1.93f), vec2(1.f , 1.7f)), 22.f);\r\n\tfloat arms = min(arm(pos - vec3(0.8f, -1.f, 1.f)), arm((pos - vec3(-0.8f, -1.f, 1.f)) * vec3(-1.f, 1.f, 1.f)));\r\n\tbod = smin(bod, arms, 20.f);\r\n\tfloat eyes = smin(eye(pos - vec3(0.34f, 0.25f, 0.98f), 23.f), eye(pos - vec3(-0.34f, 0.25f, 0.98f), -23.f), 100.f);\r\n\r\n\tfloat cappy = min(min(hat, bod), eyes);\r\n\treturn cappy;\r\n}\r\n\r\n\r\nvoid main() {\r\n\tmat3 invTranspose = mat3(u_ModelInvTr);\r\n\r\n    fs_Pos = vs_Pos;\r\n    \r\n    vec4 modelposition;\r\n    if (u_DrawMode == 0) {\r\n        modelposition = u_Model * vs_Pos;   // Temporarily store the transformed vertex positions for use below\r\n        fs_Nor = vec4(invTranspose * vs_Nor.xyz, 0);        \r\n    } else {\r\n        modelposition = vs_Pos;\r\n        fs_Nor = vs_Nor;\r\n    }\r\n\r\n    fs_Col = vec4(0.f, 1.f, 0.f, 1.f);\r\n    if (u_DrawMode == 2 && mySDF(vec3(vs_Pos)) <= 0.f) {\r\n        fs_Col = vec4(1.f, 0.f, 0.f, 1.f);\r\n    }\r\n\r\n    fs_LightVec = lightPos - modelposition;  // Compute the direction in which the light source lies\r\n\r\n    gl_PointSize = 3.0;\r\n    gl_Position = u_Project * u_View * modelposition;\r\n}\r\n"
+
+/***/ }),
+/* 69 */
+/***/ (function(module, exports) {
+
+module.exports = "#version 300 es\r\n\r\nprecision highp float;\r\nprecision highp int;\r\n\r\nuniform int u_DrawMode;\r\n\r\nuniform mat4 u_View;\r\nuniform mat4 u_Project;\r\nuniform vec3 u_Eye;\r\nuniform vec2 u_Dimensions;\r\n\r\nin vec4 fs_Pos;\r\nin vec4 fs_Nor;\r\nin vec4 fs_Col;\r\nin vec4 fs_LightVec;\r\n\r\nout vec4 out_Col;\r\n\r\n\r\nfloat EPSILON = 0.0001;\r\nfloat CLIP = 100.f;\r\n\r\n// Smooth minimum from IQ\r\nfloat smin( float a, float b, float k) {\r\n    float res = exp(-k * a) + exp(-k * b);\r\n    return -log(res) / k;\r\n}\r\n\r\n\r\nfloat arm(vec3 pos) {\r\n\treturn smin(length(pos + vec3(0.1, -0.1, 0.2)) - 0.2f, length(vec3(pos.x, pos.y * 0.5, pos.z)) - 0.2f, 16.f);\r\n}\r\n\r\nfloat eye(vec3 pos, float degrees) {\r\n\t\r\n\t// Tilts the eyes\r\n\tfloat c = cos(radians(degrees));\r\n    float s = sin(radians(degrees));\r\n    mat3  mZ = mat3(c, s, 0.f, -s, c, 0.f, 0.f, 0.f, 1.f);     \t\t\t\t\t\t\t// Z-axis rotation\r\n\tmat3  mY = mat3(cos(radians(-degrees / 1.4f)), 0.f, -sin(radians(-degrees / 1.4f)), // Y-axis rotation\r\n\t\t\t\t\t0.f, 1.f, 0.f, \r\n\t\t\t\t\tsin(radians(-degrees / 1.4f)), 0.f, cos(radians(-degrees / 1.4f)));\r\n\r\n\t// The main eyeball\r\n\tvec3  eye = mY * mZ * (vec3(pos.x + degrees * 0.0215, pos.y * 0.85 - 0.05, pos.z * 1.5f + 0.38f));\r\n\r\n\t// The surrounding torus\r\n    vec3  outline = mY * mZ * pos;\r\n\tvec2 t = vec2(0.25, 0.05);\r\n\tvec2 d = vec2(length(outline.xy * vec2(0.75, 0.65)) - t.x, outline.z);\r\n\r\n\tfloat iris = length(vec3(pos.x + degrees * 0.0035, pos.y * 0.85, pos.z * 1.7 - 0.07f)) - 0.13;\r\n\t\t\t\t\t \r\n  \treturn min(iris, min(length(d) - t.y, length(eye) - 0.5));\r\n}\r\n\r\nfloat box(vec3 p, vec3 b)\r\n{\r\n  vec3 d = abs(p) - b;\r\n  return min(max(d.x,max(d.y,d.z)),0.0) + length(max(d,0.0));\r\n}\r\n\r\n// Sphere from IQ - used for Cappy's Body\r\nfloat sphere(vec3 pos) {\r\n\treturn length(pos) - 0.97f;\r\n}\r\n\r\nfloat body(vec3 p, vec2 h) { // major warping of IQ's capped cylinder function\r\n  \tvec2 d = abs(vec2(length(p.xy), p.z)) - (h * vec2(p.z / 2.3f - sin(12.f * p.z) * 0.03 * (p.z - 2.f) * 1.2f, 1.f));\r\n  \treturn min(max(d.x,d.y),0.0) + length(max(d,0.0));\r\n}\r\n\r\n// Cylinder from IQ - used for Cappy's Hat\r\nfloat sdCappedCylinder(vec3 p, vec2 h, float f) {\r\n  \tvec2 d = abs(vec2(length(p.xz), p.y)) - h;\r\n  \treturn min(max(d.x,d.y),0.0) + length(max(d,0.0)) - f;\r\n}\r\n\r\nfloat hatBrim(vec3 p, vec2 t) {   // Essentially a bent torus\r\n\tfloat c = cos(radians(12.0 * p.x));\r\n    float s = sin(radians(12.0 * p.x));\r\n    mat2  m = mat2(c, -s, s, c);\r\n    vec3  q = vec3(m * p.xy, p.z);\r\n  \tvec2 d = vec2(length(q.xz * 0.5) - t.x, q.y + 0.5);\r\n  \treturn length(d) - t.y;\r\n}\r\n\r\n// The main part of the hat, using bent and beveled cylinders\r\nfloat hatBase(vec3 p) {\r\n    float c = cos(radians(12.0 * p.y));\r\n    float s = sin(radians(12.0 * p.y));\r\n    mat2  m = mat2(c, -s, s, c);\r\n    vec3  q = vec3(m * p.zy, p.x);\r\n\tfloat scaleVal = p.y * 0.2 + 0.7;\r\n\t// Hat and ribbon!\r\n\treturn min(sdCappedCylinder(q + vec3(0.f, 0.2 * (1.f + cos(p.x)) - 0.25, 0.f), vec2(1.37f * scaleVal, 0.2f), 0.05), \r\n\t\t\t   sdCappedCylinder(q + vec3(0.f, -0.4f, 0.f), vec2(1.2f * scaleVal, 0.7f), 0.15));\r\n}\r\n\r\n// My combination SDF\r\nfloat mySDF(vec3 pos) {\r\n\r\n\tvec3 bgPos = pos;\r\n\tpos = pos + vec3(0.f, sin(0.07) * 0.7, 0.f);\r\n\r\n\tfloat hat = min(hatBase(pos), hatBrim(pos * vec3(1.f, 1.f, 1.f), vec2(0.6f, 0.2f)));\r\n\tfloat yScale = 0.7f - pos.z / 2.2f;\r\n\tfloat bod = smin(sphere(pos + vec3(0.f, 0.7f, 0.03f)), \r\n\t\t\t\t\t body(pos + vec3(sin(3.f * pos.z) * 0.1, yScale + sin(10.f * pos.z) * 0.1, 1.93f), vec2(1.f , 1.7f)), 22.f);\r\n\tfloat arms = min(arm(pos - vec3(0.8f, -1.f, 1.f)), arm((pos - vec3(-0.8f, -1.f, 1.f)) * vec3(-1.f, 1.f, 1.f)));\r\n\tbod = smin(bod, arms, 20.f);\r\n\tfloat eyes = smin(eye(pos - vec3(0.34f, 0.25f, 0.98f), 23.f), eye(pos - vec3(-0.34f, 0.25f, 0.98f), -23.f), 100.f);\r\n\r\n\tfloat cappy = min(min(hat, bod), eyes);\r\n\treturn cappy;\r\n}\r\n\r\nvec3 estimateNormal(vec3 p) { \r\n\treturn normalize(vec3( \r\n\t\tmySDF(vec3(p.x + EPSILON, p.y, p.z)) - mySDF(vec3(p.x - EPSILON, p.y, p.z)), \r\n\t\tmySDF(vec3(p.x, p.y + EPSILON, p.z)) - mySDF(vec3(p.x, p.y - EPSILON, p.z)), \r\n\t\tmySDF(vec3(p.x, p.y, p.z + EPSILON)) - mySDF(vec3(p.x, p.y, p.z - EPSILON)) )); \r\n}\r\n\r\nvoid main() {\r\n\tif (u_DrawMode == 0) {\r\n\t\t// Material base color (before shading)\r\n    \tvec4 diffuseColor = vec4(0.f, 0.f, 1.f, 1.f);\r\n\r\n    \t// Calculate the diffuse term for Lambert shading\r\n    \tfloat diffuseTerm = dot(normalize(fs_Nor), normalize(fs_LightVec));\r\n    \t// Avoid negative lighting values\r\n    \tdiffuseTerm = clamp(diffuseTerm, 0.f, 1.f);\r\n\r\n    \tfloat ambientTerm = 0.2;\r\n\r\n    \tfloat lightIntensity = diffuseTerm + ambientTerm;   //Add a small float value to the color multiplier\r\n    \t                                                    //to simulate ambient lighting. This ensures that faces that are not\r\n    \t                                                    //lit by our point light are not completely black.\r\n\r\n    \t// Compute final shaded color\r\n    \tout_Col = vec4(diffuseColor.rgb * lightIntensity, 1.f);\r\n\t} \r\n\telse if (u_DrawMode == 1) {\r\n\t\tout_Col = vec4(1.f, 0.f, 1.f, 1.f);\r\n\t} else {\r\n\t\tout_Col = fs_Col;\r\n\t}\r\n}\r\n"
 
 /***/ })
 /******/ ]);

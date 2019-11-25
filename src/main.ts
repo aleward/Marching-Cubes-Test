@@ -1,5 +1,6 @@
 import {mat4, vec3, vec2} from 'gl-matrix';
 import * as Stats from 'stats-js';
+import {ComputeShaderProgramUniform} from './project/ComputeShaderProgramUniform';
 import * as DAT from 'dat-gui';
 import Square from './geometry/Square';
 import Camera from './Camera';
@@ -7,6 +8,9 @@ import {setGL} from './globals';
 import ShaderProgram, {Shader} from './rendering/gl/ShaderProgram';
 import Cube from './geometry/Cube';
 import MarchCube from './geometry/MarchCube';
+import { GLTF } from './project/GLTF';
+import fsSource from './shaders/march.frag.glsl.js';
+import './types/WebGL2Compute';
 
 // Define an object with application parameters and button callbacks
 // This will be referred to by dat.GUI's functions that add GUI elements.
@@ -42,7 +46,19 @@ function main() {
     canvas.height = height;
   }
 
-  const gl = <WebGL2RenderingContext> canvas.getContext('webgl2');
+  // From 9ballsyndrome github
+  let computeProgram:WebGLProgram;
+  let computeUniform:ComputeShaderProgramUniform;
+  let computeUniformDirty:boolean;
+  let ssboIn:WebGLBuffer;
+  let ssboOut:WebGLBuffer;
+  
+  let model:GLTF;
+  let numGroups:number;
+  let numInstances:number;
+
+  // Want below to be context:WebGL2ComputeRenderingContext and webgl2-compute
+  const gl = <WebGL2ComputeRenderingContext> canvas.getContext('webgl2');
   if (!gl) {
     alert('WebGL 2 not supported!');
   }
@@ -61,6 +77,42 @@ function main() {
   gl.clearColor(0.0, 0.0, 0.0, 1);
   gl.disable(gl.DEPTH_TEST);
   //gl.lineWidth(2);
+
+  // More from 9ball - change to my cube vals
+  numInstances = 1024;
+  numGroups = numInstances / 256;
+  computeUniformDirty = true;
+
+  let shaderSource : string = fsSource({
+    
+  });
+
+  // ******** SIMILAR TO WHAT HAPPENS IN THE SHADER CLASSES*******
+  // CREATE WebGLShader for ComputeShader
+  const computeShader:WebGLShader = gl.createShader(gl.COMPUTE_SHADER);
+  gl.shaderSource(computeShader, shaderSource);
+  gl.compileShader(computeShader);
+  if(!gl.getShaderParameter(computeShader, gl.COMPILE_STATUS))
+  {
+    console.log(gl.getShaderInfoLog(computeShader));
+  }
+  // CREATE WebGLProgram for ComputeShader
+  computeProgram = gl.createProgram();
+  gl.attachShader(computeProgram, computeShader);
+  gl.linkProgram(computeProgram);
+  if(!gl.getProgramParameter(computeProgram, gl.LINK_STATUS))
+  {
+    console.log(gl.getProgramInfoLog(computeProgram));
+  }
+
+  computeUniform = new ComputeShaderProgramUniform('Uniforms', 1);
+  computeUniform.createBuffer(this.context);
+  computeUniform.index = this.context.getUniformBlockIndex(this.computeProgram, this.computeUniform.name);
+  computeUniformDirty = true;
+  gl.bindBufferBase(this.context.UNIFORM_BUFFER, this.computeUniform.binding, this.computeUniform.buffer);
+  gl.uniformBlockBinding(this.computeProgram, this.computeUniform.index, this.computeUniform.binding);
+
+  // **********************************************************************
 
   const raymarchShader = new ShaderProgram([
     new Shader(gl.VERTEX_SHADER, require('./shaders/screenspace-vert.glsl')),
@@ -100,6 +152,15 @@ function main() {
     cubeMarch.setModelMatrix(modelMat);
     cubeMarch.setUnifDrawMode(2);
   }
+
+  // ******** ********** MORE SHADER SETUP *********** *******
+  const instanceAttributeData:Float32Array = new Float32Array(outerCube.positions.length);
+  for(let i:number = 0; i < outerCube.positions.length; i++)
+  {
+    // position
+    instanceAttributeData[i] = outerCube.positions[i];
+  }
+  // *********************************************************
 
   let time = 0.;
 

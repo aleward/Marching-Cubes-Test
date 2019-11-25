@@ -143,7 +143,7 @@ void main() {
         fs_Nor = vs_Nor;
     }
 
-    fs_Col = vec4(1.f, 1.f, 1.f, 1.f);
+    fs_Col = vec4(1.f, 0.f, 0.f, 1.f);
     if (u_DrawMode == 2 && mySDF(vec3(vs_Pos)) <= 0.f) {
         fs_Col = vec4(1.f, 0.f, 0.f, 1.f);
     }
