@@ -7,13 +7,17 @@ import {setGL} from './globals';
 import ShaderProgram, {Shader} from './rendering/gl/ShaderProgram';
 import Cube from './geometry/Cube';
 import MarchCube from './geometry/MarchCube';
+import March from './March';
+import Triangle from './geometry/Triangle';
+import {cornerTris, caseArray} from './Cases'
 
 // Define an object with application parameters and button callbacks
 // This will be referred to by dat.GUI's functions that add GUI elements.
 const controls = {
   // TODO: add any controls you want
   'Cubes Across' : 10,
-  'Generate Mesh' : function(){}, // maybe set a boolean that'll be set to false when process ends
+  'Show Marching Cube Divisions' : true, // Generate: maybe set a boolean that'll be set to false when process ends
+  'Hide SDF Cappy' : true,
 };
 
 let screenQuad: Square;
@@ -31,8 +35,9 @@ function main() {
   // TODO: add any controls you need to the gui
   const gui = new DAT.GUI();
   // E.G. gui.add(controls, 'tesselations', 0, 8).step(1);
-  var cubesAcross = gui.add(controls, 'Cubes Across', 5, 50).step(1);
-  var generate = gui.add(controls, 'Generate Mesh');
+  var cubesAcross = gui.add(controls, 'Cubes Across', 5, 30).step(1);
+  var showPoints = gui.add(controls, 'Show Marching Cube Divisions');
+  var showCappy = gui.add(controls, 'Hide SDF Cappy');
 
   // get canvas and webgl context
   const canvas = <HTMLCanvasElement> document.getElementById('canvas');
@@ -90,7 +95,41 @@ function main() {
 
   let cModelMat = mat4.create();
   mat4.multiply(cModelMat, cubeTrans, cubeScale);
-                                  
+  // CHANGING FOR CHECKS
+  mat4.identity(cModelMat);
+
+
+  // ****YEP SO CUBE MARCHING HAPPENS FIRST BC NO COMPUTE SHADER ****
+  
+  // Initialize March structure - contains vertices and block divisions
+  let mainMarch: March;
+  
+  function divisionsReset(divis: number) {
+    mainMarch = new March(outerCube.tempRefScale, 
+    outerCube.tempRefTrans, divis);
+
+    //To be parallelized
+    mainMarch.testVertexSDFs();
+    mainMarch.testBoxValues();
+    mainMarch.setTriangles();
+
+    mainMarch.create();
+
+    //let checkNumss = 0;
+    for (let i = 0; i < mainMarch.blocks.length; i++) {
+      let currBlock = mainMarch.blocks[i];
+      /*if (currBlock.caseNum == 3) {
+        checkNumss++;
+      }*/
+      for (let j = 0; j < currBlock.triangles.length; j++) {
+        currBlock.triangles[j].setNorms();
+        currBlock.triangles[j].create();
+      }
+    }
+  }
+  divisionsReset(outerCube.divisions);
+
+  // *****************************************************************
 
   function setVals(modelMat: mat4) {
     cubeMarch.setEye(camera.controls.eye);
@@ -98,10 +137,12 @@ function main() {
     cubeMarch.setProjectionMatrix(camera.projectionMatrix);
     cubeMarch.setDimensions(vec2.fromValues(window.innerWidth, window.innerHeight));
     cubeMarch.setModelMatrix(modelMat);
-    cubeMarch.setUnifDrawMode(2);
   }
 
   let time = 0.;
+  let pointCheck = true;
+
+  raymarchShader.setUnifDrawMode(1);
 
   // This function will be called every frame
   function tick() {
@@ -119,13 +160,40 @@ function main() {
     raymarchShader.setDimensions(vec2.fromValues(window.innerWidth, window.innerHeight));
     raymarchShader.setTime(time);
 
+    // Interactive GUI
+    cubesAcross.onChange(function(value: number) {
+      divisionsReset(value);
+    })
+    showPoints.onChange(function(value: boolean) {
+      pointCheck = value;
+    })
+    showCappy.onChange(function(value: boolean) {
+      if (value) { raymarchShader.setUnifDrawMode(1); }
+      else       { raymarchShader.setUnifDrawMode(0); }
+    })
+
     // March!
     raymarchShader.draw(screenQuad);
 
-    // TODO: more shaders to layer / process the first one? (either via framebuffers or blending)
-    setVals(cModelMat);
+    // Dont want depth enabled for SDFs, do for meshes
     gl.enable(gl.DEPTH_TEST);
-    cubeMarch.draw(outerCube);
+
+    // Update uniform variables (and set shader to work for gl.Points)
+    setVals(cModelMat);
+    cubeMarch.setUnifDrawMode(2);
+    // Draw Cube corner display for debugging putposes
+    if (pointCheck) { cubeMarch.draw(mainMarch); }
+
+    // Change the shader to work for gl.Triangles
+    cubeMarch.setUnifDrawMode(0);
+    
+    // Draw triangles from cube marching, parse each block for values
+    for (let i = 0; i < mainMarch.blocks.length; i++) {
+      let currBlock = mainMarch.blocks[i];
+      for (let j = 0; j < currBlock.triangles.length; j++) {
+        cubeMarch.draw(currBlock.triangles[j]);
+      }
+    }
     gl.disable(gl.DEPTH_TEST);
 
     time = time + 1.0;

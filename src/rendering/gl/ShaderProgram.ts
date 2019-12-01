@@ -23,6 +23,7 @@ class ShaderProgram {
 
   attrPos: number;
   attrNor: number;
+  attrCol: number;
 
   unifDrawMode: WebGLUniformLocation;
   unifModel: WebGLUniformLocation;
@@ -47,6 +48,7 @@ class ShaderProgram {
     // Raymarcher only draws a quad in screen space! No other attributes
     this.attrPos = gl.getAttribLocation(this.prog, "vs_Pos");
     this.attrNor = gl.getAttribLocation(this.prog, "vs_Nor");
+    this.attrCol = gl.getAttribLocation(this.prog, "vs_Col");
 
     // TODO: add other attributes here
     this.unifDrawMode      = gl.getUniformLocation(this.prog, "u_DrawMode");
@@ -137,11 +139,17 @@ class ShaderProgram {
       gl.vertexAttribPointer(this.attrNor, 4, gl.FLOAT, false, 0, 0);
     }
 
+    if (this.attrCol != -1 && d.bindCol()) {
+      gl.enableVertexAttribArray(this.attrCol);
+      gl.vertexAttribPointer(this.attrCol, 4, gl.FLOAT, false, 0, 0);
+    }
+
     d.bindIdx();
     gl.drawElements(d.drawMode(), d.elemCount(), gl.UNSIGNED_INT, 0);
 
     if (this.attrPos != -1) gl.disableVertexAttribArray(this.attrPos);
     if (this.attrNor != -1) gl.disableVertexAttribArray(this.attrNor);
+    if (this.attrCol != -1) gl.disableVertexAttribArray(this.attrCol);
   }
 };
 

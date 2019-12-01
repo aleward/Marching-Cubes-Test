@@ -20,6 +20,7 @@ uniform mat4 u_Project;
 in vec4 vs_Pos;             // The array of vertex positions passed to the shader
 
 in vec4 vs_Nor;             // The array of vertex normals passed to the shader
+in vec4 vs_Col;
 
 out vec4 fs_Nor;            // The array of normals that has been transformed by u_ModelInvTr. This is implicitly passed to the fragment shader.
 out vec4 fs_LightVec;       // The direction in which our virtual light lies, relative to each vertex. This is implicitly passed to the fragment shader.
@@ -143,9 +144,10 @@ void main() {
         fs_Nor = vs_Nor;
     }
 
-    fs_Col = vec4(1.f, 1.f, 1.f, 1.f);
-    if (u_DrawMode == 2 && mySDF(vec3(vs_Pos)) <= 0.f) {
-        fs_Col = vec4(1.f, 0.f, 0.f, 1.f);
+    fs_Col = vec4(0.f, 1.f, 0.f, 1.f);
+    if (u_DrawMode == 2/* && mySDF(vec3(vs_Pos)) <= 0.f*/) {
+		//fs_Col = vec4(1.f, 0.f, 0.f, 1.f);
+		fs_Col = vs_Col;
     }
 
     fs_LightVec = lightPos - modelposition;  // Compute the direction in which the light source lies

@@ -7,6 +7,7 @@ uniform mat4 u_Project;
 uniform vec3 u_Eye;
 uniform vec2 u_Dimensions;
 uniform float u_Time;
+uniform int u_DrawMode;
 
 in vec4 fs_Pos;
 //in vec4 gl_FragCoord;
@@ -128,42 +129,47 @@ void main() {
 	float x = (gl_FragCoord.x / u_Dimensions.x) * 2.f - 1.f;
 	float y = 1.f - (gl_FragCoord.y / u_Dimensions.y) * 2.f;
 	vec4 bg = inverse(u_View) * inverse(u_Project) * vec4(x * 1000.f, y * -1000.f, 1000.f, 1000.f);
+	
+	if (u_DrawMode == 0) {
+		vec3 dir = normalize(vec3(bg.x, bg.y, bg.z) - u_Eye);
 
-	vec3 dir = normalize(vec3(bg.x, bg.y, bg.z) - u_Eye);
+		bool geo = false;
 
-	bool geo = false;
+		float maxLoops = 0.f; // Ensures program doesn't crash
 
-	float maxLoops = 0.f; // Ensures program doesn't crash
+		float t = mySDF(pos);
+		float dist = t;
 
-	float t = mySDF(pos);
-	float dist = t;
-
-	while (t < CLIP && maxLoops < 100.f) {
-		pos += t * dir;
-		float i = mySDF(pos);
-		dist += i;
-		if (i < EPSILON && i > -0.-EPSILON) { //
-			geo = true;
-			break;
+		while (t < CLIP && maxLoops < 100.f) {
+			pos += t * dir;
+			float i = mySDF(pos);
+			dist += i;
+			if (i < EPSILON && i > -0.-EPSILON) { //
+				geo = true;
+				break;
+			}
+			t = i;
+			maxLoops++;
 		}
-		t = i;
-		maxLoops++;
-	}
 
 
-	if (geo) {
-		vec4 lightVec = vec4(5.f, 5.f, 3.f, 1.f) - vec4(pos, 1.f);
-		float diffuse = dot(estimateNormal(pos), normalize(lightVec.xyz));
-    	diffuse = min(diffuse, 1.0);
-   		diffuse = max(diffuse, 0.0);
-		diffuse /= (dist * 0.1);
-		float lightIntensity = diffuse * 0.6 + 0.2;
+		if (geo) {
+			vec4 lightVec = vec4(5.f, 5.f, 3.f, 1.f) - vec4(pos, 1.f);
+			float diffuse = dot(estimateNormal(pos), normalize(lightVec.xyz));
+    		diffuse = min(diffuse, 1.0);
+   			diffuse = max(diffuse, 0.0);
+			diffuse /= (dist * 0.1);
+			float lightIntensity = diffuse * 0.6 + 0.2;
 
-		out_Col = vec4(mix(vec3(0.5843, 0.898, 1.0) + vec3(1.0, 0.8627, 0.3686) *
-            cos(2.f * 3.14159265359 * (vec3(0.8353, 0.549, 0.1765) / lightIntensity +
-                vec3(0.511, 0.1176, 0.0902))) * lightIntensity, vec3(0.f, 0.f, 0.f), dist / CLIP), 1.0);
+			out_Col = vec4(mix(vec3(0.5843, 0.898, 1.0) + vec3(1.0, 0.8627, 0.3686) *
+    	        cos(2.f * 3.14159265359 * (vec3(0.8353, 0.549, 0.1765) / lightIntensity +
+    	            vec3(0.511, 0.1176, 0.0902))) * lightIntensity, vec3(0.f, 0.f, 0.f), dist / CLIP), 1.0);
+		} else {
+			// Background gradient
+			float glow = (dot(normalize(bg.xyz), vec3(0.f, 1.f, 0.f)) + 1.0) / 2.f;
+			out_Col = vec4(mix(vec3(0.0, 1.0, 1.0), vec3(0.0, 0.0, 0.0), sqrt(glow)), 1.0);
+		}
 	} else {
-		// Background gradient
 		float glow = (dot(normalize(bg.xyz), vec3(0.f, 1.f, 0.f)) + 1.0) / 2.f;
 		out_Col = vec4(mix(vec3(0.0, 1.0, 1.0), vec3(0.0, 0.0, 0.0), sqrt(glow)), 1.0);
 	}

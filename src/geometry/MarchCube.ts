@@ -126,7 +126,7 @@ class MarchCube extends Drawable {
       // Vertex loop
       for (let x: number = -1.0; x <= 1.0; x += delta) {
         for (let y: number = -1.0; y <= 1.0; y += delta) {
-          for (let z: number = -1.0; z <= 1.0; z += delta) {
+          for (let z: number = -1.0; z <= 1.0; z += (delta * 3.4 / 3.6)) {
             this.positions[4 * idxNum]     = x * this.tempRefScale[0] + this.tempRefTrans[0];
             this.positions[4 * idxNum + 1] = y * this.tempRefScale[1] + this.tempRefTrans[1];
             this.positions[4 * idxNum + 2] = z * this.tempRefScale[2] + this.tempRefTrans[2];
@@ -148,6 +148,7 @@ class MarchCube extends Drawable {
 
       let idxNum: number = 0;
       let delta : number = 2.0 / this.divisions;
+      let div : number = 2.0 / (this.divisions + 1);
 
       let mmX = this.tempRefScale[0];
       let mmY = this.tempRefScale[1];
@@ -162,9 +163,10 @@ class MarchCube extends Drawable {
             this.positions[4 * idxNum + 2] = z * this.tempRefScale[2] + this.tempRefTrans[2];
             this.positions[4 * idxNum + 3] = 1.0;
             
-            this.indices[idxNum] = idxNum;/*((x + 1.0) / 2.0 * this.divisions) + 
-                                   this.divisions * (((y + 1.0) / 2.0 * this.divisions) +
-                                   this.divisions * ((z + 1.0) / 2.0 * this.divisions));*/
+            let tempNum = Math.round(((z + 1.0) / delta) + 
+                                     (this.divisions + 1) * ((y + 1.0) / delta) +
+                                     (this.divisions + 1) * (this.divisions + 1) * ((x + 1.0) / delta));
+            this.indices[idxNum] = tempNum;
             idxNum++;
           }
         }
