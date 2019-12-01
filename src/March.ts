@@ -262,6 +262,12 @@ class March extends Drawable {
             vec3.add(avg, avg, this.positions[ambiguities[i]]);
         }
         vec3.divide(avg, avg, vec3.fromValues(ambiguities.length, ambiguities.length, ambiguities.length));
+
+        let result = mySDF(avg);
+        if (result <= 0) {
+            let cNum = this.blocks[blockNum].caseNum;
+            this.blocks[blockNum].caseNum = caseArray[cNum].ambNum;
+        }
     }
 
     testBoxValues() {
@@ -361,12 +367,24 @@ class March extends Drawable {
                         vec3.rotateY(vert, vert, center, this.blocks[i].rotation[1] * rad);
                         vec3.rotateX(vert, vert, center, this.blocks[i].rotation[0] * rad);
                         // - Check and record which edge it is on
-                        //let e = this.edgeCheck(vert); // for later
+                        let e = this.edgeCheck(vert); // for later
 
-                        // Scale each vertex
+                        /*// Scale each vertex
                         vec3.multiply(vert, vert, scale);
                         // Translate each vertex
-                        vec3.add(vert, vert, this.blocks[i].pos);
+                        vec3.add(vert, vert, this.blocks[i].pos);*/
+                        
+                        // Interpolate between the existing vertices
+                        let pos1: vec3 = this.positions[this.blocks[i].vertIdxs[e[0]]];
+                        let pos2: vec3 = this.positions[this.blocks[i].vertIdxs[e[1]]];
+                        // With existing weights
+                        let weight1: number = this.weights[this.blocks[i].vertIdxs[e[0]]];
+                        let weight2: number = this.weights[this.blocks[i].vertIdxs[e[1]]];
+                        let lerp: number = -weight1 / (weight2 - weight1);
+
+                        vert = vec3.fromValues(pos1[0] + lerp * (pos2[0] - pos1[0]), 
+                                               pos1[1] + lerp * (pos2[1] - pos1[1]), 
+                                               pos1[2] + lerp * (pos2[2] - pos1[2]))
 
                         vec3.copy(currTriangle.vertices[v], vert);
                     }

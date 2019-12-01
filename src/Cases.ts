@@ -46,6 +46,7 @@ export const cornerTris : Array<Triangle> = ([new Triangle([vec3.fromValues(-0.5
 
 // Add values pointing to ambiguity replacements?
 
+// NORMAL CASES
 const Case0 : Case = new Case([], false, 0);
 const Case1 : Case = new Case([cornerTris[0]], false, 1);
 
@@ -57,7 +58,7 @@ const Case2 : Case = new Case([new Triangle([vec3.fromValues(-0.5, 0.0, -0.5),
                                            vec3.fromValues(0.0, -0.5, -0.5)])], // Bottom one
                               false, 2); 
 
-const Case3 : Case = new Case([cornerTris[0], cornerTris[5]], true, 3);
+const Case3 : Case = new Case([cornerTris[0], cornerTris[5]], true, 15);
 const Case4 : Case = new Case([cornerTris[0], cornerTris[6]], true, 4);
 
 const Case5 : Case = new Case([new Triangle([vec3.fromValues(0.5, 0.0, 0.5),
@@ -159,7 +160,36 @@ const Case14 : Case = new Case([new Triangle([vec3.fromValues(-0.5, -0.5, 0.0),
                                              vec3.fromValues(0.0, 0.5, -0.5)])], // top Piece
                                false, 14); 
 
-export const caseArray : Array<Case> = [Case0, Case1, Case2, Case3, Case4, Case5, Case6, Case7, Case8, Case9, Case10, Case11, Case12, Case13, Case14];
+// AMBIGUOUS CASES
+const Case3_2 : Case = new Case([new Triangle([vec3.fromValues(-0.5, 0.0, -0.5),
+                                             vec3.fromValues(-0.5, 0.5, 0.0),
+                                             vec3.fromValues(0.0, -0.5, -0.5)]), // bottom right
+                               new Triangle([vec3.fromValues(-0.5, 0.5, 0.0),
+                                             vec3.fromValues(0.0, 0.5, 0.5),
+                                             vec3.fromValues(0.0, -0.5, -0.5)]), // Mid
+                               new Triangle([vec3.fromValues(0.0, -0.5, -0.5),
+                                             vec3.fromValues(0.0, 0.5, 0.5),
+                                             vec3.fromValues(-0.5, 0.0, 0.5)]), // bottom left
+                               new Triangle([vec3.fromValues(0.0, -0.5, -0.5),
+                                             vec3.fromValues(-0.5, 0.0, 0.5),
+                                             vec3.fromValues(-0.5, -0.5, 0.0)])], // top Piece
+                               false, 15);
+
+const Case6_2 : Case = new Case([new Triangle([vec3.fromValues(-0.5, 0.0, -0.5),
+                                             vec3.fromValues(-0.5, 0.5, 0.0),
+                                             vec3.fromValues(0.0, -0.5, -0.5)]), // bottom right
+                               new Triangle([vec3.fromValues(-0.5, 0.5, 0.0),
+                                             vec3.fromValues(0.0, 0.5, 0.5),
+                                             vec3.fromValues(0.0, -0.5, -0.5)]), // Mid
+                               new Triangle([vec3.fromValues(0.0, -0.5, -0.5),
+                                             vec3.fromValues(0.0, 0.5, 0.5),
+                                             vec3.fromValues(-0.5, 0.0, 0.5)]), // bottom left
+                               new Triangle([vec3.fromValues(0.0, -0.5, -0.5),
+                                             vec3.fromValues(-0.5, 0.0, 0.5),
+                                             vec3.fromValues(-0.5, -0.5, 0.0)])], // top Piece
+                               false, 15);
+                               
+export const caseArray : Array<Case> = [Case0, Case1, Case2, Case3, Case4, Case5, Case6, Case7, Case8, Case9, Case10, Case11, Case12, Case13, Case14, Case3_2, Case6_2];
 
 
 type Tuple = [number, vec3];
@@ -167,6 +197,7 @@ type Tuple = [number, vec3];
 function mapReturn() : Array<Tuple> {
   let temp = new Array<Tuple>(256);
 
+  
   // CASE 0
   temp[0]   = [0, vec3.fromValues(0, 0, 0)];
   temp[255] = [0, vec3.fromValues(0, 0, 0)];
@@ -193,7 +224,7 @@ function mapReturn() : Array<Tuple> {
   temp[34]  = [2, vec3.fromValues(270, 0, 90)];
   temp[3]   = [2, vec3.fromValues(0, 0, 180)];
   temp[9]   = [2, vec3.fromValues(0, 90, 180)];
-  temp[6]   = [2, vec3.fromValues(0, 270, 180)];
+  temp[6]   = [2, vec3.fromValues(0, 270, 180)];/**/
 
   // CASE 3 - 12 of em
   temp[132] = [3, vec3.fromValues(0, 0, 0)];
@@ -239,7 +270,7 @@ function mapReturn() : Array<Tuple> {
   temp[7]   = [5, vec3.fromValues(0, 90, 180)];
   temp[14]  = [5, vec3.fromValues(0, 0, 180)];
   temp[11]  = [5, vec3.fromValues(0, 180, 180)];
-  temp[13]  = [5, vec3.fromValues(0, 270, 180)];
+  temp[13]  = [5, vec3.fromValues(0, 270, 180)];/**/
 
   // CASE 6 - 24 of em
   temp[194] = [6, vec3.fromValues(0, 0, 0)];
@@ -293,7 +324,7 @@ function mapReturn() : Array<Tuple> {
   temp[141] = [9, vec3.fromValues(0, 0, 180)];
   temp[78]  = [9, vec3.fromValues(0, 90, 180)];
   temp[39]  = [9, vec3.fromValues(0, 180, 180)];
-  temp[27]  = [9, vec3.fromValues(0, 270, 180)];
+  temp[27]  = [9, vec3.fromValues(0, 270, 180)];/**/
 
   // CASE 10 - 8 of em
   temp[170] = [10, vec3.fromValues(0, 0, 0)];
@@ -313,7 +344,7 @@ function mapReturn() : Array<Tuple> {
   temp[99]  = [11, vec3.fromValues(90, 0, 90)];
   temp[57]  = [11, vec3.fromValues(270, 0, 90)];
   temp[156] = [11, vec3.fromValues(90, 0, 270)];
-  temp[198] = [11, vec3.fromValues(270, 0, 270)];
+  temp[198] = [11, vec3.fromValues(270, 0, 270)];/**/
 
   // CASE 12 - 24 of em
   temp[120] = [12, vec3.fromValues(0, 0, 0)];
@@ -357,7 +388,7 @@ function mapReturn() : Array<Tuple> {
   temp[54]  = [14, vec3.fromValues(90, 0, 90)];
   temp[147] = [14, vec3.fromValues(270, 0, 90)];
   temp[201] = [14, vec3.fromValues(90, 0, 270)];
-  temp[108] = [14, vec3.fromValues(270, 0, 270)];
+  temp[108] = [14, vec3.fromValues(270, 0, 270)];/**/
 
   return temp;
 }

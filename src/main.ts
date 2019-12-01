@@ -127,7 +127,7 @@ function main() {
       }
     }
   }
-  divisionsReset(outerCube.divisions);
+  divisionsReset(outerCube.divisions); // 33 is current maximum
 
   // *****************************************************************
 
