@@ -16,7 +16,7 @@ import {cornerTris, caseArray} from './Cases'
 const controls = {
   // TODO: add any controls you want
   'Cubes Across' : 10,
-  'Show Marching Cube Divisions' : true, // Generate: maybe set a boolean that'll be set to false when process ends
+  'Show Marching Cube Divisions' : false, // Generate: maybe set a boolean that'll be set to false when process ends
   'Hide SDF Cappy' : true,
 };
 
@@ -35,7 +35,7 @@ function main() {
   // TODO: add any controls you need to the gui
   const gui = new DAT.GUI();
   // E.G. gui.add(controls, 'tesselations', 0, 8).step(1);
-  var cubesAcross = gui.add(controls, 'Cubes Across', 5, 30).step(1);
+  var cubesAcross = gui.add(controls, 'Cubes Across', 5, 100).step(1);
   var showPoints = gui.add(controls, 'Show Marching Cube Divisions');
   var showCappy = gui.add(controls, 'Hide SDF Cappy');
 
@@ -140,7 +140,7 @@ function main() {
   }
 
   let time = 0.;
-  let pointCheck = true;
+  let pointCheck = false;
 
   raymarchShader.setUnifDrawMode(1);
 

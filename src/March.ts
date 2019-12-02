@@ -190,33 +190,32 @@ class March extends Drawable {
         this.blocks = new Array<Block>(this.numBlocks);
     
         // Vertex loop
-        for (let x: number = -1.0; x <= 1.0; x += delta) {
-          for (let y: number = -1.0; y <= 1.0; y += delta) {
-            for (let z: number = -1.0; z <= 1.0; z += delta) {
-                let temp = vec3.fromValues(x * this.tempRefScale[0] + this.tempRefTrans[0],
-                                           y * this.tempRefScale[1] + this.tempRefTrans[1],
-                                           z * this.tempRefScale[2] + this.tempRefTrans[2]);
-                let index = Math.round(((z + 1.0) / delta) + 
-                                       (this.divisions + 1) * ((y + 1.0) / delta) +
-                                       (this.divisions + 1) * (this.divisions + 1) * ((x + 1.0) / delta));
-                  
-                this.positions[index] = temp;
-                //this.positions[idxNum] = temp;
-                //idxNum++;
+        for (let x: number = 0.0; x <= this.divisions; x++) {
+            for (let y: number = 0.0; y <= this.divisions; y++) {
+                for (let z: number = 0.0; z <= this.divisions; z++) {
+                    let temp = vec3.fromValues((x * delta - 1.0) * this.tempRefScale[0] + this.tempRefTrans[0],
+                                               (y * delta - 1.0) * this.tempRefScale[1] + this.tempRefTrans[1],
+                                               (z * delta - 1.0) * this.tempRefScale[2] + this.tempRefTrans[2]);
+                    let index = z + 
+                                (this.divisions + 1) * y +
+                                (this.divisions + 1) * (this.divisions + 1) * x;
+                    
+                    this.positions[index] = temp;
+                }
             }
-          }
         }
+
     
         let newScale = vec3.fromValues(this.tempRefTrans[0] * 2.0 / this.divisions,
                                        this.tempRefTrans[1] * 2.0 / this.divisions,
                                        this.tempRefTrans[2] * 2.0 / this.divisions);
         // Block loop
-        for (let x: number = -1.0; x < 1.0; x += delta) {
-            for (let y: number = -1.0; y < 1.0; y += delta) {
-                for (let z: number = -1.0; z < 1.0; z += delta) {
-                    let newPos = vec3.fromValues((x + delta / 2) * this.tempRefScale[0] + this.tempRefTrans[0],
-                                               (y + delta / 2) * this.tempRefScale[1] + this.tempRefTrans[1],
-                                               (z + delta / 2) * this.tempRefScale[2] + this.tempRefTrans[2]);
+        for (let x: number = 0.0; x <= this.divisions; x++) {
+            for (let y: number = 0.0; y <= this.divisions; y++) {
+                for (let z: number = 0.0; z <= this.divisions; z++) {
+                    let newPos = vec3.fromValues(((x * delta - 1.0) + delta / 2) * this.tempRefScale[0] + this.tempRefTrans[0],
+                                                 ((y * delta - 1.0) + delta / 2) * this.tempRefScale[1] + this.tempRefTrans[1],
+                                                 ((z * delta - 1.0) + delta / 2) * this.tempRefScale[2] + this.tempRefTrans[2]);
                     
                     // FILL ARRAY
                     let vertArr : Array<number> = new Array<number>(8);
@@ -228,9 +227,9 @@ class March extends Drawable {
                                 let tempZ = iZ;
                                 if (iX == 1) { tempZ = 1 - iZ; }
 
-                                let index = Math.round(((z + 1.0) / delta + tempZ) + 
-                                                        (this.divisions + 1) * ((y + 1.0) / delta + iY) +
-                                                        (this.divisions + 1) * (this.divisions + 1) * ((x + 1.0) / delta + iX));
+                                let index = (z + tempZ) + 
+                                            (this.divisions + 1) * (y + iY) +
+                                            (this.divisions + 1) * (this.divisions + 1) * (x + iX);
                                             
                                 vertArr[idxNum] = index;
                                 idxNum++;
@@ -238,9 +237,9 @@ class March extends Drawable {
                         }
                     }
                   
-                    let index = Math.round(((z + 1.0) / delta) + 
-                                            (this.divisions) * ((y + 1.0) / delta) +
-                                            (this.divisions) * (this.divisions) * ((x + 1.0) / delta));
+                    let index = z + 
+                                (this.divisions + 1) * y +
+                                (this.divisions + 1) * (this.divisions + 1) * x;
                     this.blocks[index] = new Block(vertArr, newPos, newScale);
                 }
             }
