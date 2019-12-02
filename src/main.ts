@@ -16,7 +16,7 @@ import {cornerTris, caseArray} from './Cases'
 const controls = {
   // TODO: add any controls you want
   'Cubes Across' : 10,
-  'Show Marching Cube Divisions' : true, // Generate: maybe set a boolean that'll be set to false when process ends
+  'Show Marching Cube Divisions' : false, // Generate: maybe set a boolean that'll be set to false when process ends
   'Hide SDF Cappy' : true,
 };
 
@@ -130,7 +130,7 @@ function main() {
       }
     }
   }
-  divisionsReset(outerCube.divisions); // 33 is current maximum
+  divisionsReset(95); // 33 is current maximum
 
   // *****************************************************************
 
@@ -143,7 +143,7 @@ function main() {
   }
 
   let time = 0.;
-  let pointCheck = true;
+  let pointCheck = false;
 
   raymarchShader.setUnifDrawMode(1);
 
