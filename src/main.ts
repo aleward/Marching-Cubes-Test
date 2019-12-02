@@ -17,6 +17,7 @@ const controls = {
   // TODO: add any controls you want
   'Cubes Across' : 10,
   'Show Marching Cube Divisions' : false, // Generate: maybe set a boolean that'll be set to false when process ends
+  'Hide Mesh Cappy' : false,
   'Hide SDF Cappy' : true,
 };
 
@@ -37,6 +38,7 @@ function main() {
   // E.G. gui.add(controls, 'tesselations', 0, 8).step(1);
   var cubesAcross = gui.add(controls, 'Cubes Across', 5, 100).step(1);
   var showPoints = gui.add(controls, 'Show Marching Cube Divisions');
+  var showMesh = gui.add(controls, 'Hide Mesh Cappy');
   var showCappy = gui.add(controls, 'Hide SDF Cappy');
 
   // get canvas and webgl context
@@ -141,6 +143,7 @@ function main() {
 
   let time = 0.;
   let pointCheck = false;
+  let meshCheck = false;
 
   raymarchShader.setUnifDrawMode(1);
 
@@ -167,6 +170,9 @@ function main() {
     showPoints.onChange(function(value: boolean) {
       pointCheck = value;
     })
+    showMesh.onChange(function(value: boolean) {
+      meshCheck = value;
+    })
     showCappy.onChange(function(value: boolean) {
       if (value) { raymarchShader.setUnifDrawMode(1); }
       else       { raymarchShader.setUnifDrawMode(0); }
@@ -188,10 +194,12 @@ function main() {
     cubeMarch.setUnifDrawMode(0);
     
     // Draw triangles from cube marching, parse each block for values
-    for (let i = 0; i < mainMarch.blocks.length; i++) {
-      let currBlock = mainMarch.blocks[i];
-      for (let j = 0; j < currBlock.triangles.length; j++) {
-        cubeMarch.draw(currBlock.triangles[j]);
+    if (!meshCheck) {
+      for (let i = 0; i < mainMarch.blocks.length; i++) {
+        let currBlock = mainMarch.blocks[i];
+        for (let j = 0; j < currBlock.triangles.length; j++) {
+          cubeMarch.draw(currBlock.triangles[j]);
+        }
       }
     }
     gl.disable(gl.DEPTH_TEST);
