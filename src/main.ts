@@ -119,18 +119,8 @@ function main() {
       mainMarch.callMeshClass();
       mainMarch.finalMesh.create();
     }
-    else {
-      for (let i = 0; i < mainMarch.blocks.length; i++) {
-        let currBlock = mainMarch.blocks[i];
-        for (let j = 0; j < currBlock.triangles.length; j++) {
-          // Uncomment if not EDGEMODE
-          //currBlock.triangles[j].setNorms();
-          //currBlock.triangles[j].create();
-        }
-      }
-    }
   }
-  divisionsReset(95); // 33 is current maximum
+  divisionsReset(outerCube.divisions); // 33 is current maximum
 
   // *****************************************************************
 
