@@ -120,7 +120,7 @@ function main() {
       mainMarch.finalMesh.create();
     }
   }
-  divisionsReset(outerCube.divisions); // 33 is current maximum
+  divisionsReset(95); // 33 is current maximum
 
   // *****************************************************************
 
