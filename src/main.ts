@@ -35,7 +35,7 @@ function main() {
   // TODO: add any controls you need to the gui
   const gui = new DAT.GUI();
   // E.G. gui.add(controls, 'tesselations', 0, 8).step(1);
-  var cubesAcross = gui.add(controls, 'Cubes Across', 5, 30).step(1);
+  var cubesAcross = gui.add(controls, 'Cubes Across', 5, 100).step(1);
   var showPoints = gui.add(controls, 'Show Marching Cube Divisions');
   var showCappy = gui.add(controls, 'Hide SDF Cappy');
 
@@ -100,7 +100,7 @@ function main() {
 
 
   // ****YEP SO CUBE MARCHING HAPPENS FIRST BC NO COMPUTE SHADER ****
-  
+  let EDGEMODE = true;
   // Initialize March structure - contains vertices and block divisions
   let mainMarch: March;
   
@@ -115,15 +115,18 @@ function main() {
 
     mainMarch.create();
 
-    //let checkNumss = 0;
-    for (let i = 0; i < mainMarch.blocks.length; i++) {
-      let currBlock = mainMarch.blocks[i];
-      /*if (currBlock.caseNum == 3) {
-        checkNumss++;
-      }*/
-      for (let j = 0; j < currBlock.triangles.length; j++) {
-        currBlock.triangles[j].setNorms();
-        currBlock.triangles[j].create();
+    if (EDGEMODE) {
+      mainMarch.callMeshClass();
+      mainMarch.finalMesh.create();
+    }
+    else {
+      for (let i = 0; i < mainMarch.blocks.length; i++) {
+        let currBlock = mainMarch.blocks[i];
+        for (let j = 0; j < currBlock.triangles.length; j++) {
+          // Uncomment if not EDGEMODE
+          //currBlock.triangles[j].setNorms();
+          //currBlock.triangles[j].create();
+        }
       }
     }
   }
@@ -188,10 +191,16 @@ function main() {
     cubeMarch.setUnifDrawMode(0);
     
     // Draw triangles from cube marching, parse each block for values
-    for (let i = 0; i < mainMarch.blocks.length; i++) {
-      let currBlock = mainMarch.blocks[i];
-      for (let j = 0; j < currBlock.triangles.length; j++) {
-        cubeMarch.draw(currBlock.triangles[j]);
+    if (EDGEMODE) {
+      cubeMarch.draw(mainMarch.finalMesh);
+    }
+    else {
+      for (let i = 0; i < mainMarch.blocks.length; i++) {
+        let currBlock = mainMarch.blocks[i];
+        for (let j = 0; j < currBlock.triangles.length; j++) {
+          // Uncomment if not EDGEMODE
+          //cubeMarch.draw(currBlock.triangles[j]);
+        }
       }
     }
     gl.disable(gl.DEPTH_TEST);

@@ -2,8 +2,10 @@ import {vec3, vec2, mat3, mat2} from 'gl-matrix';
 import Block from './Block';
 import {map, caseArray} from './Cases'
 import Triangle from './geometry/Triangle';
+import Triangle2 from './geometry/Triangle2';
 import Drawable from './rendering/gl/Drawable';
 import { gl } from './globals';
+import Mesh from './geometry/Mesh';
 
 // MARCH STARTS wAY BELOW
 
@@ -157,9 +159,21 @@ function mySDF(p : vec3) : number {
 
 
 
+let EDGEMODE: boolean = true;
 
+//type EdgeLabel = [number, number];
+function edgeLabel(n1: number, n2: number) : string {
+    return `[${n1}, ${n2}]`;
+}
 
-type Edge = [number, number];
+class Edge {
+    vertexIndex: number;
+    numVerts: number;
+    constructor() {
+        this.vertexIndex = -1;
+        this.numVerts = 0;
+    }
+}
 
 // *********** MARCH CLASS *************
 class March extends Drawable {
@@ -173,6 +187,15 @@ class March extends Drawable {
     
     tempRefScale: vec3;
     tempRefTrans: vec3;
+
+    // If we move to EDGEMODE
+    edges: Map<string, Edge>;
+    triVerts: Array<vec3>;
+    triNorms: Array<vec3>;
+    count: number;
+
+    finalMesh: Mesh;
+    // **********************
     
     constructor(scale: vec3, trans: vec3, divs: number) {
         super();
@@ -189,34 +212,83 @@ class March extends Drawable {
         this.weights = new Array<number>(this.numVerts);
         this.blocks = new Array<Block>(this.numBlocks);
     
+        // If we move to EDGEMODE
+        this.edges = new Map<string, Edge>();
+        this.triVerts = new Array<vec3>();
+        this.triNorms = new Array<vec3>();
+        this.count = 0;
+        // **********************
+
         // Vertex loop
-        for (let x: number = -1.0; x <= 1.0; x += delta) {
-          for (let y: number = -1.0; y <= 1.0; y += delta) {
-            for (let z: number = -1.0; z <= 1.0; z += delta) {
-                let temp = vec3.fromValues(x * this.tempRefScale[0] + this.tempRefTrans[0],
-                                           y * this.tempRefScale[1] + this.tempRefTrans[1],
-                                           z * this.tempRefScale[2] + this.tempRefTrans[2]);
-                let index = Math.round(((z + 1.0) / delta) + 
-                                       (this.divisions + 1) * ((y + 1.0) / delta) +
-                                       (this.divisions + 1) * (this.divisions + 1) * ((x + 1.0) / delta));
-                  
-                this.positions[index] = temp;
-                //this.positions[idxNum] = temp;
-                //idxNum++;
+        for (let x: number = 0.0; x <= this.divisions; x++) {
+            for (let y: number = 0.0; y <= this.divisions; y++) {
+                for (let z: number = 0.0; z <= this.divisions; z++) {
+                    let temp = vec3.fromValues((x * delta - 1.0) * this.tempRefScale[0] + this.tempRefTrans[0],
+                                               (y * delta - 1.0) * this.tempRefScale[1] + this.tempRefTrans[1],
+                                               (z * delta - 1.0) * this.tempRefScale[2] + this.tempRefTrans[2]);
+                    let index = z + 
+                                (this.divisions + 1) * y +
+                                (this.divisions + 1) * (this.divisions + 1) * x;
+                    
+                    this.positions[index] = temp;
+                }
             }
-          }
+        }
+
+        // Edge loop
+        if (EDGEMODE) {
+            for (let x: number = 0.0; x <= this.divisions; x++) {
+                for (let y: number = 0.0; y <= this.divisions; y++) {
+                    for (let z: number = 0.0; z <= this.divisions; z++) {
+                        let index = z + 
+                                    (this.divisions + 1) * y +
+                                    (this.divisions + 1) * (this.divisions + 1) * x;
+                        
+                        // Write up to three new edges per point
+                        // x-axis edge
+                        if (x < this.divisions) {
+                            let index2 = z + 
+                                         (this.divisions + 1) * y +
+                                         (this.divisions + 1) * (this.divisions + 1) * (x + 1);
+                            let eL: string = edgeLabel(index, index2);
+                            let e = new Edge();
+                            this.edges.set(eL, e);
+                        }
+
+                        // y-axis edge
+                        if (y < this.divisions) {
+                            let index2 = z + 
+                                         (this.divisions + 1) * (y + 1) +
+                                         (this.divisions + 1) * (this.divisions + 1) * x;
+                            let eL: string = edgeLabel(index, index2);
+                            let e = new Edge();
+                            this.edges.set(eL, e);
+                        }
+
+                        // z-axis edge
+                        if (y < this.divisions) {
+                            let index2 = (z + 1) + 
+                                         (this.divisions + 1) * y +
+                                         (this.divisions + 1) * (this.divisions + 1) * x;
+                            let eL: string = edgeLabel(index, index2);
+                            let e = new Edge();
+                            this.edges.set(eL, e);
+                        }
+                    }
+                }
+            }
         }
     
         let newScale = vec3.fromValues(this.tempRefTrans[0] * 2.0 / this.divisions,
                                        this.tempRefTrans[1] * 2.0 / this.divisions,
                                        this.tempRefTrans[2] * 2.0 / this.divisions);
         // Block loop
-        for (let x: number = -1.0; x < 1.0; x += delta) {
-            for (let y: number = -1.0; y < 1.0; y += delta) {
-                for (let z: number = -1.0; z < 1.0; z += delta) {
-                    let newPos = vec3.fromValues((x + delta / 2) * this.tempRefScale[0] + this.tempRefTrans[0],
-                                               (y + delta / 2) * this.tempRefScale[1] + this.tempRefTrans[1],
-                                               (z + delta / 2) * this.tempRefScale[2] + this.tempRefTrans[2]);
+        for (let x: number = 0.0; x <= this.divisions; x++) {
+            for (let y: number = 0.0; y <= this.divisions; y++) {
+                for (let z: number = 0.0; z <= this.divisions; z++) {
+                    let newPos = vec3.fromValues(((x * delta - 1.0) + delta / 2) * this.tempRefScale[0] + this.tempRefTrans[0],
+                                                 ((y * delta - 1.0) + delta / 2) * this.tempRefScale[1] + this.tempRefTrans[1],
+                                                 ((z * delta - 1.0) + delta / 2) * this.tempRefScale[2] + this.tempRefTrans[2]);
                     
                     // FILL ARRAY
                     let vertArr : Array<number> = new Array<number>(8);
@@ -228,9 +300,9 @@ class March extends Drawable {
                                 let tempZ = iZ;
                                 if (iX == 1) { tempZ = 1 - iZ; }
 
-                                let index = Math.round(((z + 1.0) / delta + tempZ) + 
-                                                        (this.divisions + 1) * ((y + 1.0) / delta + iY) +
-                                                        (this.divisions + 1) * (this.divisions + 1) * ((x + 1.0) / delta + iX));
+                                let index = (z + tempZ) + 
+                                            (this.divisions + 1) * (y + iY) +
+                                            (this.divisions + 1) * (this.divisions + 1) * (x + iX);
                                             
                                 vertArr[idxNum] = index;
                                 idxNum++;
@@ -238,17 +310,50 @@ class March extends Drawable {
                         }
                     }
                   
-                    let index = Math.round(((z + 1.0) / delta) + 
-                                            (this.divisions) * ((y + 1.0) / delta) +
-                                            (this.divisions) * (this.divisions) * ((x + 1.0) / delta));
+                    let index = z + 
+                                (this.divisions + 1) * y +
+                                (this.divisions + 1) * (this.divisions + 1) * x;
                     this.blocks[index] = new Block(vertArr, newPos, newScale);
                 }
             }
         }
-
-        let xjhs = 0;
     }
   
+    callMeshClass() {
+        //let triIndxVBO = new Uint32Array(this.count);
+        let indices = new Array<number>();
+        let idx = 0;
+        for (let i = 0; i < this.blocks.length; i++) {
+            let currBlock = this.blocks[i];
+            for (let j = 0; j < currBlock.triangles.length; j++) {
+                for (let k = 0; k < 3; k++) {
+                    //triIndxVBO[idx] = currBlock.triangles[j].indices[k];
+                    //idx++;
+                    indices.push(currBlock.triangles[j].indices[k]);
+                }
+            }
+        }
+        let triIndxVBO = new Uint32Array(indices);
+
+        let maxVertexCount = this.triVerts.length * 4; 
+        let triPosVBO = new Float32Array(maxVertexCount);
+        let triNormVBO = new Float32Array(maxVertexCount);
+    
+        for (let vertCount = 0; vertCount < maxVertexCount / 4; vertCount++) {
+            triPosVBO[4 * vertCount]     = this.triVerts[vertCount][0];
+            triPosVBO[4 * vertCount + 1] = this.triVerts[vertCount][1];
+            triPosVBO[4 * vertCount + 2] = this.triVerts[vertCount][2];
+            triPosVBO[4 * vertCount + 3] = 1.0;
+
+            triNormVBO[4 * vertCount]     = this.triNorms[vertCount][0]
+            triNormVBO[4 * vertCount + 1] = this.triNorms[vertCount][1]
+            triNormVBO[4 * vertCount + 2] = this.triNorms[vertCount][2]
+            triNormVBO[4 * vertCount + 3] = 0.0;
+        }
+
+        // Mesh constructor
+        this.finalMesh = new Mesh(triIndxVBO, triPosVBO, triNormVBO);
+    }
 
     testVertexSDFs() {
         for (let i = 0; i < this.numVerts; i++) {
@@ -321,7 +426,7 @@ class March extends Drawable {
     }
 
     // Maybe make some epsilon range
-    edgeCheck(point: vec3) : Edge {
+    edgeCheck(point: vec3) : [number, number] {
         if (point[1] == -0.5 && point[2] == -0.5) { return [0, 3]; }
         if (point[1] == -0.5 && point[2] ==  0.5) { return [1, 2]; }
         if (point[1] ==  0.5 && point[2] ==  0.5) { return [5, 6]; }
@@ -351,8 +456,11 @@ class March extends Drawable {
             if (c != -1) {
                 for (let t = 0; t < caseArray[c].triangles.length; t++) {
                     // Track the current altered triangle to pass to this block
-                    let currTriangle = new Triangle([vec3.create(), vec3.create(), vec3.create()]);
-                    
+                    // Uncomment if not EDGEMODE
+                    //let currTriangle = new Triangle([vec3.create(), vec3.create(), vec3.create()]);
+                    let currTriangle = new Array<number>(3);
+                    let currWeights = new Array<number>(3);
+
                     for (let v = 0; v < 3; v++) {
                         // Copy vertex from current case
                         let vert = vec3.create();
@@ -367,31 +475,96 @@ class March extends Drawable {
                         vec3.rotateY(vert, vert, center, this.blocks[i].rotation[1] * rad);
                         vec3.rotateX(vert, vert, center, this.blocks[i].rotation[0] * rad);
                         // - Check and record which edge it is on
-                        let e = this.edgeCheck(vert); // for later
+                        let e = this.edgeCheck(vert); 
+                        let e0 = this.blocks[i].vertIdxs[e[0]];
+                        let e1 = this.blocks[i].vertIdxs[e[1]];
+                        let eL = edgeLabel(e0, e1);
 
-                        /*// Scale each vertex
-                        vec3.multiply(vert, vert, scale);
-                        // Translate each vertex
-                        vec3.add(vert, vert, this.blocks[i].pos);*/
-                        
-                        // Interpolate between the existing vertices
-                        let pos1: vec3 = this.positions[this.blocks[i].vertIdxs[e[0]]];
-                        let pos2: vec3 = this.positions[this.blocks[i].vertIdxs[e[1]]];
-                        // With existing weights
-                        let weight1: number = this.weights[this.blocks[i].vertIdxs[e[0]]];
-                        let weight2: number = this.weights[this.blocks[i].vertIdxs[e[1]]];
-                        let lerp: number = -weight1 / (weight2 - weight1);
+                        if (EDGEMODE) {
+                            if (this.edges.has(eL)) {
+                                let currEdge: Edge = this.edges.get(eL);
+                                // If the edge has no existing vertex, create a new one
+                                if (currEdge.vertexIndex == -1) {
+                                    // Interpolate between the existing vertices
+                                    let pos1: vec3 = this.positions[e0];
+                                    let pos2: vec3 = this.positions[e1];
+                                    // With existing weights
+                                    let weight1: number = this.weights[e0];
+                                    let weight2: number = this.weights[e1];
+                                    let lerp: number = -weight1 / (weight2 - weight1);
 
-                        vert = vec3.fromValues(pos1[0] + lerp * (pos2[0] - pos1[0]), 
-                                               pos1[1] + lerp * (pos2[1] - pos1[1]), 
-                                               pos1[2] + lerp * (pos2[2] - pos1[2]))
+                                    vert = vec3.fromValues(pos1[0] + lerp * (pos2[0] - pos1[0]), 
+                                                           pos1[1] + lerp * (pos2[1] - pos1[1]), 
+                                                           pos1[2] + lerp * (pos2[2] - pos1[2]));
+                                    
+                                    currTriangle[v] = this.triVerts.length;
+                                    currWeights[v] = currEdge.numVerts;
 
-                        vec3.copy(currTriangle.vertices[v], vert);
+                                    currEdge.numVerts = 1;
+                                    currEdge.vertexIndex = this.triVerts.length;
+                                    
+                                    this.triVerts.push(vert);
+                                    // Fill with an empty normal, to be handled later
+                                    this.triNorms.push(vec3.fromValues(0.0, 0.0, 0.0));
+                                } 
+                                // If the edge already has a vertex, blend normal values
+                                else {
+                                    // Update triangle and edge
+                                    currTriangle[v] = currEdge.vertexIndex;
+                                    currWeights[v] = currEdge.numVerts;
+                                    currEdge.numVerts++;
+                                }
+                            } 
+                        } else {
+                            /*// Scale each vertex // FOR 45 DEGREE ANGLE MODE
+                            vec3.multiply(vert, vert, scale);
+                            // Translate each vertex
+                            vec3.add(vert, vert, this.blocks[i].pos);*/
+                            
+                            // FOR SMOOTH MODE
+                            // Interpolate between the existing vertices
+                            let pos1: vec3 = this.positions[this.blocks[i].vertIdxs[e[0]]];
+                            let pos2: vec3 = this.positions[this.blocks[i].vertIdxs[e[1]]];
+                            // With existing weights
+                            let weight1: number = this.weights[this.blocks[i].vertIdxs[e[0]]];
+                            let weight2: number = this.weights[this.blocks[i].vertIdxs[e[1]]];
+                            let lerp: number = -weight1 / (weight2 - weight1);
+
+                            vert = vec3.fromValues(pos1[0] + lerp * (pos2[0] - pos1[0]), 
+                                                   pos1[1] + lerp * (pos2[1] - pos1[1]), 
+                                                   pos1[2] + lerp * (pos2[2] - pos1[2]));
+
+                            // Uncomment if not EDGEMODE
+                            //vec3.copy(currTriangle.vertices[v], vert);
+                        }
                     }
+
+                    // Increment count by 3 for every triangle - used later for mesh construction
+                    //this.count += 3;
                     
+                    let newTri = new Triangle2(currTriangle);
+                    let faceNorm = newTri.getNormal(this.triVerts[currTriangle[0]],
+                                                    this.triVerts[currTriangle[1]],
+                                                    this.triVerts[currTriangle[2]]);
+
+                    // Update stored normals
+                    for (let n = 0; n < 3; n++) {
+                        let currIdx = currTriangle[n];
+                        
+                        if (currWeights[n] == 0) {
+                            vec3.copy(this.triNorms[currIdx], faceNorm);
+                        } else {
+                            let avg = this.triNorms[currIdx];
+                            vec3.copy(this.triNorms[currIdx], newTri.averageNormal(avg, faceNorm, currWeights[n]));
+                        }
+                    }
+
                     // Every three vertices, push() back a new Triangle into this block's triangle array
-                    //this.blocks[i].triangles[t] = currTriangle;
-                    this.blocks[i].triangles.push(currTriangle);
+                    if (EDGEMODE) {
+                        this.blocks[i].triangles.push(newTri);
+                    }
+                    // Uncomment if not EDGEMODE
+                    //this.blocks[i].triangles.push(currTriangle);
                 }
             }
         }
