@@ -15,14 +15,13 @@ import {cornerTris, caseArray} from './Cases'
 // This will be referred to by dat.GUI's functions that add GUI elements.
 const controls = {
   // TODO: add any controls you want
-  'Cubes Across' : 10,
-  'Show Marching Cube Divisions' : false, // Generate: maybe set a boolean that'll be set to false when process ends
-  'Hide Mesh Cappy' : false,
-  'Hide SDF Cappy' : true,
+  'Cubes Across' : 10,                    // X,Y,Z number of cubes
+  'Show Marching Cube Divisions' : false, // Displays the dots that show Cube layout
+  'Hide Mesh Cappy' : false,              // Hides mesh output
+  'Hide SDF Cappy' : true,                // Hides original SDF
 };
 
 let screenQuad: Square;
-let outerCube: MarchCube;
 
 function main() {
   // Initial display for framerate
@@ -33,15 +32,20 @@ function main() {
   stats.domElement.style.top = '0px';
   document.body.appendChild(stats.domElement);
 
-  // TODO: add any controls you need to the gui
+  // GUI CONTROLS
   const gui = new DAT.GUI();
-  // E.G. gui.add(controls, 'tesselations', 0, 8).step(1);
+  // Look above for descriptions of each
   var cubesAcross = gui.add(controls, 'Cubes Across', 5, 100).step(1);
   var showPoints = gui.add(controls, 'Show Marching Cube Divisions');
   var showMesh = gui.add(controls, 'Hide Mesh Cappy');
   var showCappy = gui.add(controls, 'Hide SDF Cappy');
 
-  // get canvas and webgl context
+  // Values that are set via gui
+  let pointCheck = false;
+  let meshCheck = false;
+
+
+  // Get canvas and webgl context
   const canvas = <HTMLCanvasElement> document.getElementById('canvas');
 
   function setSize(width: number, height: number) {
@@ -53,79 +57,59 @@ function main() {
   if (!gl) {
     alert('WebGL 2 not supported!');
   }
-  // `setGL` is a function imported above which sets the value of `gl` in the `globals.ts` module.
-  // Later, we can import `gl` from `globals.ts` to access it
   setGL(gl);
 
   screenQuad = new Square(vec3.fromValues(0, 0, 0));
   screenQuad.create();
 
-  // MARCHING CUBES TESTS
-  outerCube = new MarchCube(vec3.fromValues(0, 0, 0));
-
   const camera = new Camera(vec3.fromValues(0, 0, 5), vec3.fromValues(0, 0, 0));
 
   gl.clearColor(0.0, 0.0, 0.0, 1);
   gl.disable(gl.DEPTH_TEST);
-  //gl.lineWidth(2);
 
+
+  // SHADERS
   const raymarchShader = new ShaderProgram([
     new Shader(gl.VERTEX_SHADER, require('./shaders/screenspace-vert.glsl')),
     new Shader(gl.FRAGMENT_SHADER, require('./shaders/raymarch-frag.glsl')),
   ]);
 
-  // NEW MARCHCUBE VALUES
+  // An adaptable shader that can handle drawing dots or triangles
   const cubeMarch = new ShaderProgram([
     new Shader(gl.VERTEX_SHADER, require('./shaders/marching-cubes-vert.glsl')),
     new Shader(gl.FRAGMENT_SHADER, require('./shaders/marching-cubes-frag.glsl')),
   ]);
-
-  let cubeTrans = mat4.fromValues(1.0,  0.0,  0.0,  0.0,
-                                  0.0,  1.0,  0.0,  0.0,
-                                  0.0,  0.0,  1.0,  0.0,
-                                  0.0, -0.1, -0.2,  1.0);
-
-  let cubeScale = mat4.fromValues(1.7,  0.0,  0.0,  0.0,
-                                  0.0,  1.7,  0.0,  0.0,
-                                  0.0,  0.0,  1.8,  0.0,
-                                  0.0,  0.0,  0.0,  1.0);
-
-  outerCube.setScaleTrans(vec3.fromValues(1.7, 1.7, 1.8), 
-                          vec3.fromValues(0.0, -0.1, -0.2));
   
-  outerCube.create();
 
-  let cModelMat = mat4.create();
-  mat4.multiply(cModelMat, cubeTrans, cubeScale);
-  // CHANGING FOR CHECKS
-  mat4.identity(cModelMat);
-
-
-  // ****YEP SO CUBE MARCHING HAPPENS FIRST BC NO COMPUTE SHADER ****
-  let EDGEMODE = true;
-  // Initialize March structure - contains vertices and block divisions
+  // ****YEP SO CUBE MARCHING HAPPENS FIRST BC NO COMPUTE SHADER :(****
+  // - Initialize March structure - contains block vertices and divisions
   let mainMarch: March;
   
+  // Primary function calls to generate the mesh
+  // This function allows a 'reset' every time the divisions value changes
   function divisionsReset(divis: number) {
-    mainMarch = new March(outerCube.tempRefScale, 
-    outerCube.tempRefTrans, divis);
+    mainMarch = new March(vec3.fromValues(1.7, 1.7, 1.8), // AABB Scale
+                          vec3.fromValues(0.0, -0.1, -0.2), // AABB Translation
+                          divis);
 
-    //To be parallelized
+    // To be parallelized in a compute shader
     mainMarch.testVertexSDFs();
     mainMarch.testBoxValues();
     mainMarch.setTriangles();
 
     mainMarch.create();
 
-    if (EDGEMODE) {
-      mainMarch.callMeshClass();
-      mainMarch.finalMesh.create();
-    }
+    mainMarch.callMeshClass();
+    mainMarch.finalMesh.create();
   }
-  divisionsReset(95); // 33 is current maximum
-
+  divisionsReset(10);
   // *****************************************************************
+  
+  // used as input to function below:
+  let cModelMat = mat4.create();
+  mat4.identity(cModelMat);
 
+  // Sets the uniform values in the adaptable shader
   function setVals(modelMat: mat4) {
     cubeMarch.setEye(camera.controls.eye);
     cubeMarch.setViewMatrix(camera.viewMatrix);
@@ -134,13 +118,12 @@ function main() {
     cubeMarch.setModelMatrix(modelMat);
   }
 
-  let time = 0.;
-  let pointCheck = false;
-  let meshCheck = false;
+  let time = 0.; // not used any more
 
+  // Initializing the raymarcher to only draw a background (no cappy)
   raymarchShader.setUnifDrawMode(1);
 
-  // This function will be called every frame
+  // RUNNABLE FUNCTION: This function will be called every frame
   function tick() {
     camera.update();
     stats.begin();
@@ -148,15 +131,14 @@ function main() {
     gl.viewport(0, 0, window.innerWidth, window.innerHeight);
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
-    // TODO: get / calculate relevant uniforms to send to shader here
-    // TODO: send uniforms to shader
+    // Uniforms to be sent to the raymarch shader
     raymarchShader.setEye(camera.controls.eye);
     raymarchShader.setViewMatrix(camera.viewMatrix);
     raymarchShader.setProjectionMatrix(camera.projectionMatrix);
     raymarchShader.setDimensions(vec2.fromValues(window.innerWidth, window.innerHeight));
     raymarchShader.setTime(time);
 
-    // Interactive GUI
+    // Interactive GUI updates
     cubesAcross.onChange(function(value: number) {
       divisionsReset(value);
     })
@@ -167,38 +149,29 @@ function main() {
       meshCheck = value;
     })
     showCappy.onChange(function(value: boolean) {
-      if (value) { raymarchShader.setUnifDrawMode(1); }
-      else       { raymarchShader.setUnifDrawMode(0); }
+      if (value) { raymarchShader.setUnifDrawMode(1); } // 1 = Only background
+      else       { raymarchShader.setUnifDrawMode(0); } // 0 = Cappy and background
     })
 
     // March!
     raymarchShader.draw(screenQuad);
 
-    // Dont want depth enabled for SDFs, do for meshes
+    // Dont want depth enabled for SDFs, do for mesh and points
     gl.enable(gl.DEPTH_TEST);
 
     // Update uniform variables (and set shader to work for gl.Points)
     setVals(cModelMat);
     cubeMarch.setUnifDrawMode(2);
-    // Draw Cube corner display for debugging putposes
+
+    //    - Draw Cube points display for debugging putposes
     if (pointCheck) { cubeMarch.draw(mainMarch); }
 
     // Change the shader to work for gl.Triangles
     cubeMarch.setUnifDrawMode(0);
     
-    // Draw triangles from cube marching, parse each block for values
-    if (EDGEMODE) {
-      if (!meshCheck) { cubeMarch.draw(mainMarch.finalMesh); }
-    }
-    else {
-      for (let i = 0; i < mainMarch.blocks.length; i++) {
-        let currBlock = mainMarch.blocks[i];
-        for (let j = 0; j < currBlock.triangles.length; j++) {
-          // Uncomment if not EDGEMODE
-          //cubeMarch.draw(currBlock.triangles[j]);
-        }
-      }
-    }
+    // Draw mesh from cube marching
+    if (!meshCheck) { cubeMarch.draw(mainMarch.finalMesh); }
+
     gl.disable(gl.DEPTH_TEST);
 
     time = time + 1.0;

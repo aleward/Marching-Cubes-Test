@@ -75,11 +75,11 @@ function sphere(pos : vec3) : number {
 
 function body(p : vec3, h : vec2) : number { // major warping of IQ's capped cylinder function
     let d = vec2.create();
-      let d1 : vec2 = vec2.fromValues(Math.abs(vec2.length(vec2.fromValues(p[0], p[1]))), Math.abs(p[2]));
-      let d2 = vec2.create();
-      let d2temp : vec2 = vec2.multiply(d2, h, vec2.fromValues(p[2] / 2.3 - Math.sin(12.0 * p[2] * rad) * 0.03 * (p[2] - 2.) * 1.2, 1.));
-      
-      vec2.subtract(d, d1, d2);
+    let d1 : vec2 = vec2.fromValues(Math.abs(vec2.length(vec2.fromValues(p[0], p[1]))), Math.abs(p[2]));
+    let d2 = vec2.create();
+    let d2temp : vec2 = vec2.multiply(d2, h, vec2.fromValues(p[2] / 2.3 - Math.sin(12.0 * p[2] * rad) * 0.03 * (p[2] - 2.) * 1.2, 1.));
+    
+    vec2.subtract(d, d1, d2);
     return Math.min(Math.max(d[0],d[1]),0.0) + vec2.length(vec2.fromValues(Math.max(d[0],0.0), Math.max(d[1],0.0)));
 }
 
@@ -159,16 +159,14 @@ function mySDF(p : vec3) : number {
 
 
 
-let EDGEMODE: boolean = true;
-
-//type EdgeLabel = [number, number];
+// String value used to pair [vertex ID, vertex ID] to Edge in edges map
 function edgeLabel(n1: number, n2: number) : string {
     return `[${n1}, ${n2}]`;
 }
 
 class Edge {
     vertexIndex: number;
-    numVerts: number;
+    numVerts: number; // Number of marched vertices that land here
     constructor() {
         this.vertexIndex = -1;
         this.numVerts = 0;
@@ -177,28 +175,31 @@ class Edge {
 
 // *********** MARCH CLASS *************
 class March extends Drawable {
-    positions: Array<vec3>;
-    weights: Array<number>;
-    blocks: Array<Block>;
+    positions: Array<vec3>; // Corners of every "cube" - the grid (""vertices"")
+    weights: Array<number>; // The SDF values at each above corner
+    blocks: Array<Block>;   // The cubes to check
+    edges: Map<string, Edge>;   // Edges that connect above positions
     
+    // Grid data
     divisions: number;
     numVerts: number;
     numBlocks: number;
     
+    // AABB data, puts vertices in worldspace > model space
     tempRefScale: vec3;
     tempRefTrans: vec3;
 
-    // If we move to EDGEMODE
-    edges: Map<string, Edge>;
+    // Final triangle-vertices and normals (to pass into Mesh)
     triVerts: Array<vec3>;
     triNorms: Array<vec3>;
     count: number;
 
+    // The end result
     finalMesh: Mesh;
-    // **********************
     
     constructor(scale: vec3, trans: vec3, divs: number) {
         super();
+        // *****Initializing variables pre-filling*****
         this.tempRefScale = scale;
         this.tempRefTrans = trans;
     
@@ -211,21 +212,22 @@ class March extends Drawable {
         this.positions = new Array<vec3>(this.numVerts);
         this.weights = new Array<number>(this.numVerts);
         this.blocks = new Array<Block>(this.numBlocks);
-    
-        // If we move to EDGEMODE
         this.edges = new Map<string, Edge>();
+
         this.triVerts = new Array<vec3>();
         this.triNorms = new Array<vec3>();
         this.count = 0;
-        // **********************
+        // ********************************************
 
         // Vertex loop
         for (let x: number = 0.0; x <= this.divisions; x++) {
             for (let y: number = 0.0; y <= this.divisions; y++) {
                 for (let z: number = 0.0; z <= this.divisions; z++) {
+                    // Find vertex location for this index
                     let temp = vec3.fromValues((x * delta - 1.0) * this.tempRefScale[0] + this.tempRefTrans[0],
                                                (y * delta - 1.0) * this.tempRefScale[1] + this.tempRefTrans[1],
                                                (z * delta - 1.0) * this.tempRefScale[2] + this.tempRefTrans[2]);
+                    //Translate 3D indices->1D
                     let index = z + 
                                 (this.divisions + 1) * y +
                                 (this.divisions + 1) * (this.divisions + 1) * x;
@@ -236,48 +238,48 @@ class March extends Drawable {
         }
 
         // Edge loop
-        if (EDGEMODE) {
-            for (let x: number = 0.0; x <= this.divisions; x++) {
-                for (let y: number = 0.0; y <= this.divisions; y++) {
-                    for (let z: number = 0.0; z <= this.divisions; z++) {
-                        let index = z + 
-                                    (this.divisions + 1) * y +
-                                    (this.divisions + 1) * (this.divisions + 1) * x;
-                        
-                        // Write up to three new edges per point
-                        // x-axis edge
-                        if (x < this.divisions) {
-                            let index2 = z + 
-                                         (this.divisions + 1) * y +
-                                         (this.divisions + 1) * (this.divisions + 1) * (x + 1);
-                            let eL: string = edgeLabel(index, index2);
-                            let e = new Edge();
-                            this.edges.set(eL, e);
-                        }
+        for (let x: number = 0.0; x <= this.divisions; x++) {
+            for (let y: number = 0.0; y <= this.divisions; y++) {
+                for (let z: number = 0.0; z <= this.divisions; z++) {
+                    // Current vertex index
+                    let index = z + 
+                                (this.divisions + 1) * y +
+                                (this.divisions + 1) * (this.divisions + 1) * x;
+                    
+                    // Write up to three new edges per point
+                    // x-axis edge
+                    if (x < this.divisions) {
+                        let index2 = z + 
+                                     (this.divisions + 1) * y +
+                                     (this.divisions + 1) * (this.divisions + 1) * (x + 1);
+                        let eL: string = edgeLabel(index, index2);
+                        let e = new Edge();
+                        this.edges.set(eL, e);
+                    }
 
-                        // y-axis edge
-                        if (y < this.divisions) {
-                            let index2 = z + 
-                                         (this.divisions + 1) * (y + 1) +
-                                         (this.divisions + 1) * (this.divisions + 1) * x;
-                            let eL: string = edgeLabel(index, index2);
-                            let e = new Edge();
-                            this.edges.set(eL, e);
-                        }
+                    // y-axis edge
+                    if (y < this.divisions) {
+                        let index2 = z + 
+                                     (this.divisions + 1) * (y + 1) +
+                                     (this.divisions + 1) * (this.divisions + 1) * x;
+                        let eL: string = edgeLabel(index, index2);
+                        let e = new Edge();
+                        this.edges.set(eL, e);
+                    }
 
-                        // z-axis edge
-                        if (y < this.divisions) {
-                            let index2 = (z + 1) + 
-                                         (this.divisions + 1) * y +
-                                         (this.divisions + 1) * (this.divisions + 1) * x;
-                            let eL: string = edgeLabel(index, index2);
-                            let e = new Edge();
-                            this.edges.set(eL, e);
-                        }
+                    // z-axis edge
+                    if (y < this.divisions) {
+                        let index2 = (z + 1) + 
+                                     (this.divisions + 1) * y +
+                                     (this.divisions + 1) * (this.divisions + 1) * x;
+                        let eL: string = edgeLabel(index, index2);
+                        let e = new Edge();
+                        this.edges.set(eL, e);
                     }
                 }
             }
         }
+    
     
         let newScale = vec3.fromValues(this.tempRefTrans[0] * 2.0 / this.divisions,
                                        this.tempRefTrans[1] * 2.0 / this.divisions,
@@ -382,8 +384,10 @@ class March extends Drawable {
             let ambiguities : Array<number> = new Array<number>();
             let a = 0;
 
-            let binary = 0;
-            let bit = 128;
+            let binary = 0; // End 8-bit value
+            let bit = 128;  // Current value to "or" by
+
+            // Each bit corresponds to one of 8 cube vertices
             for (let v = 0; v < 8; v++) {
                 if (this.weights[this.blocks[b].vertIdxs[v]] <= 0.0) {
                     binary = binary | bit;
@@ -411,21 +415,15 @@ class March extends Drawable {
                 i++;
             }
 
-            // RESOLVE FOR MULTIPLE CASES
+            // RESOLUTION FOR AMBIGUOUS CASES
             let cNum = this.blocks[b].caseNum;
             if (cNum != -1 && caseArray[cNum].canBeAmbiguous) {
                 this.resolveAmbiguities(ambiguities, b);
             }
         }
-        let ijn = i;
-
-        // **** MAKE CASE FOR if map[binary] = empty, 
-        //  set caseNum and rotation to map[!binary], 
-        // Add value to blocks saying to reverse order of 
-        // triangle verts (and thus normals)
     }
 
-    // Maybe make some epsilon range
+    // Check which edge a vertex falls on - pre-scale & translation
     edgeCheck(point: vec3) : [number, number] {
         if (point[1] == -0.5 && point[2] == -0.5) { return [0, 3]; }
         if (point[1] == -0.5 && point[2] ==  0.5) { return [1, 2]; }
@@ -455,11 +453,9 @@ class March extends Drawable {
             let c = this.blocks[i].caseNum;
             if (c != -1) {
                 for (let t = 0; t < caseArray[c].triangles.length; t++) {
-                    // Track the current altered triangle to pass to this block
-                    // Uncomment if not EDGEMODE
-                    //let currTriangle = new Triangle([vec3.create(), vec3.create(), vec3.create()]);
+                    // Track the current triangle indices for triVerts
                     let currTriangle = new Array<number>(3);
-                    let currWeights = new Array<number>(3);
+                    let currWeights = new Array<number>(3); // edge.numVerts, for normals
 
                     for (let v = 0; v < 3; v++) {
                         // Copy vertex from current case
@@ -480,91 +476,67 @@ class March extends Drawable {
                         let e1 = this.blocks[i].vertIdxs[e[1]];
                         let eL = edgeLabel(e0, e1);
 
-                        if (EDGEMODE) {
-                            if (this.edges.has(eL)) {
-                                let currEdge: Edge = this.edges.get(eL);
-                                // If the edge has no existing vertex, create a new one
-                                if (currEdge.vertexIndex == -1) {
-                                    // Interpolate between the existing vertices
-                                    let pos1: vec3 = this.positions[e0];
-                                    let pos2: vec3 = this.positions[e1];
-                                    // With existing weights
-                                    let weight1: number = this.weights[e0];
-                                    let weight2: number = this.weights[e1];
-                                    let lerp: number = -weight1 / (weight2 - weight1);
+                        if (this.edges.has(eL)) {
+                            let currEdge: Edge = this.edges.get(eL);
+                            // If the edge has no existing vertex, create a new one
+                            if (currEdge.vertexIndex == -1) {
+                                // Interpolate between the existing vertices
+                                let pos1: vec3 = this.positions[e0];
+                                let pos2: vec3 = this.positions[e1];
+                                // With existing weights
+                                let weight1: number = this.weights[e0];
+                                let weight2: number = this.weights[e1];
+                                let lerp: number = -weight1 / (weight2 - weight1);
 
-                                    vert = vec3.fromValues(pos1[0] + lerp * (pos2[0] - pos1[0]), 
-                                                           pos1[1] + lerp * (pos2[1] - pos1[1]), 
-                                                           pos1[2] + lerp * (pos2[2] - pos1[2]));
-                                    
-                                    currTriangle[v] = this.triVerts.length;
-                                    currWeights[v] = currEdge.numVerts;
+                                vert = vec3.fromValues(pos1[0] + lerp * (pos2[0] - pos1[0]), 
+                                                       pos1[1] + lerp * (pos2[1] - pos1[1]), 
+                                                       pos1[2] + lerp * (pos2[2] - pos1[2]));
+                                
+                                currTriangle[v] = this.triVerts.length;
+                                currWeights[v] = currEdge.numVerts;
 
-                                    currEdge.numVerts = 1;
-                                    currEdge.vertexIndex = this.triVerts.length;
-                                    
-                                    this.triVerts.push(vert);
-                                    // Fill with an empty normal, to be handled later
-                                    this.triNorms.push(vec3.fromValues(0.0, 0.0, 0.0));
-                                } 
-                                // If the edge already has a vertex, blend normal values
-                                else {
-                                    // Update triangle and edge
-                                    currTriangle[v] = currEdge.vertexIndex;
-                                    currWeights[v] = currEdge.numVerts;
-                                    currEdge.numVerts++;
-                                }
+                                currEdge.numVerts = 1;
+                                currEdge.vertexIndex = this.triVerts.length;
+                                
+                                this.triVerts.push(vert);
+                                // Fill with an empty normal, to be handled later
+                                this.triNorms.push(vec3.fromValues(0.0, 0.0, 0.0));
                             } 
-                        } else {
-                            /*// Scale each vertex // FOR 45 DEGREE ANGLE MODE
-                            vec3.multiply(vert, vert, scale);
-                            // Translate each vertex
-                            vec3.add(vert, vert, this.blocks[i].pos);*/
-                            
-                            // FOR SMOOTH MODE
-                            // Interpolate between the existing vertices
-                            let pos1: vec3 = this.positions[this.blocks[i].vertIdxs[e[0]]];
-                            let pos2: vec3 = this.positions[this.blocks[i].vertIdxs[e[1]]];
-                            // With existing weights
-                            let weight1: number = this.weights[this.blocks[i].vertIdxs[e[0]]];
-                            let weight2: number = this.weights[this.blocks[i].vertIdxs[e[1]]];
-                            let lerp: number = -weight1 / (weight2 - weight1);
-
-                            vert = vec3.fromValues(pos1[0] + lerp * (pos2[0] - pos1[0]), 
-                                                   pos1[1] + lerp * (pos2[1] - pos1[1]), 
-                                                   pos1[2] + lerp * (pos2[2] - pos1[2]));
-
-                            // Uncomment if not EDGEMODE
-                            //vec3.copy(currTriangle.vertices[v], vert);
-                        }
+                            // If the edge already has a vertex, blend normal values
+                            else {
+                                // Update triangle and edge
+                                currTriangle[v] = currEdge.vertexIndex;
+                                currWeights[v] = currEdge.numVerts;
+                                currEdge.numVerts++;
+                            }
+                        } 
                     }
 
-                    // Increment count by 3 for every triangle - used later for mesh construction
-                    //this.count += 3;
-                    
                     let newTri = new Triangle2(currTriangle);
+                    // Flat normal of this triangle face
                     let faceNorm = newTri.getNormal(this.triVerts[currTriangle[0]],
                                                     this.triVerts[currTriangle[1]],
                                                     this.triVerts[currTriangle[2]]);
 
                     // Update stored normals
                     for (let n = 0; n < 3; n++) {
-                        let currIdx = currTriangle[n];
+                        let currIdx = currTriangle[n]; // indices for normals and vertices match
                         
+                        // If this is the first vertex on its edge
                         if (currWeights[n] == 0) {
                             vec3.copy(this.triNorms[currIdx], faceNorm);
-                        } else {
+                        } 
+                        // If this is one of many vertices in the same place
+                        else {
+                            // Average possible normals for smooth shading
                             let avg = this.triNorms[currIdx];
-                            vec3.copy(this.triNorms[currIdx], newTri.averageNormal(avg, faceNorm, currWeights[n]));
+                            vec3.copy(this.triNorms[currIdx], 
+                                      newTri.averageNormal(avg, faceNorm, currWeights[n]));
                         }
                     }
 
                     // Every three vertices, push() back a new Triangle into this block's triangle array
-                    if (EDGEMODE) {
-                        this.blocks[i].triangles.push(newTri);
-                    }
-                    // Uncomment if not EDGEMODE
-                    //this.blocks[i].triangles.push(currTriangle);
+                    this.blocks[i].triangles.push(newTri);
                 }
             }
         }
@@ -579,6 +551,7 @@ class March extends Drawable {
         return gl.POINTS;
     }
 
+    // This Create() function draws the cube-corner-vertices
     create() {
         // Tracking variables
         let maxIndexCount = Math.pow(this.divisions + 1, 3);
@@ -593,10 +566,13 @@ class March extends Drawable {
             this.posVBO[4 * indxCount + 2] = this.positions[indxCount][2];
             this.posVBO[4 * indxCount + 3] = 1.0;
 
+            // Draw green if the point is outside the shape
             if (this.weights[indxCount] > 0) {
                 this.colVBO[4 * indxCount]     = 0.0;
                 this.colVBO[4 * indxCount + 1] = 1.0;
-            } else {
+            } 
+            // Draw red if the point is inside the shape
+            else {
                 this.colVBO[4 * indxCount]     = 1.0;
                 this.colVBO[4 * indxCount + 1] = 0.0;
             }
